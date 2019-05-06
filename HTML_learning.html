@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    
+
 </head>
 <body>
     <h1>HTML Basics</h1>
@@ -108,7 +108,7 @@
     </ul>
     <h1>HTML quotations</h1>
     <figure>
-        <figcaption>q tag</figcaption>
+        <figcaption>q tag (add quotation mark)</figcaption>
         <ul>
             <li>it defines a short quotation</li>
             <li>the browser will add quotation marks around the q element</li>
@@ -116,7 +116,15 @@
         </ul>
     </figure>
     <figure>
-        <figcaption>blackquote tag</figcaption>
+        <figcaption>cite tag (words or short section in italic)</figcaption>
+        <ul>
+            <li>it defines the title of a work</li>
+            <li>Browser display cite element in italic</li>
+            <li>for example: <cite>The scream</cite></li>
+        </ul>
+    </figure>
+    <figure>
+        <figcaption>blackquote tag (paragraph or long section in italic with indentation)</figcaption>
         <ul>
             <li>it defines a section that is quoted from another source</li>
             <li>browser will indent blackquote</li>
@@ -124,10 +132,163 @@
         </ul>
     </figure>
     <figure>
-        <figcaption></figcaption>
+        <figcaption>abbr tag</figcaption>
+        <ul>
+            <li>it defines an abbreviation or an acronym</li>
+            <li>for example: <abbr title="world health organisation">WHO</abbr></li>
+        </ul>
     </figure>
+    <figure>
+        <figcaption>address tag</figcaption>
+        <ul>
+            <li>it defines the contact information of a document or an article</li>
+            <li>the element is displayed in italic</li>
+            <li>for examole: <address>B0201 2 Barratt Street Hurstville</address></li>
+        </ul>
+    </figure>
+    <h1>HTML colors</h1>
+    <figure>
+        <figcaption>RGB rgb(255,0,144)  (red,green,blue)</figcaption>
+        <ul>
+            <li>each number represents the intensity of a color from 0 to 255</li>
+        </ul>
+        <figcaption>RGBA rgba(255,0,144,0)  (red,green,blue,opacity)</figcaption>
+        <ul>
+            <li>The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (not transparent at all)</li>
+        </ul>
+        <figcaption>HEX #ff00dd  (red,green,blue) </figcaption>
+        <ul>
+            <li>each two letter represents the intensity of a color from 00 to ff</li>
+        </ul>
+        <figcaption>HSL hsl(0,100%,50%)  (hue,saturation,lightness)</figcaption>
+        <ul>
+            <li>hue is the color wheel from 0 - 360, red is 0, green is 120, green is 240</li>
+            <li>Saturation is a percentage value, 0% means a shade of gray, and 100% is the full color.</li>
+            <li>Lightness is also a percentage, 0% is black, 50% is neither light or dark, 100% is white</li>
+        </ul>
+        <figcaption>HSLA hsla(0,100%,50%,0.5)  (hue,saturation,lightness,opacity)</figcaption>
+        <ul>
+            <li>The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (not transparent at all)</li>
+        </ul>
+    </figure>
+    <h1>HTML CSS</h1>
+    <dl>
+        <dt>add css to html in 3 ways</dt>
+        <dd>inline: using the style attribute in HTML elements</dd>
+        <dd>internal: using "style" tag in the "head" section</dd>
+        <dd>external: using external css file</dd>
+    </dl>
+    <h1>HTML links</h1>
+    <h2>link colors</h2>
+    <ul>
+        By default, a link will appear like this:
+        <li>an unvisited link is underlined and blue</li>
+        <li>a visited link is underlined and purple</li>
+        <li>an active link is underlined and red</li>
+        <a href="#">this is a link for test</a>
+    </ul>
+    <h2>the target attribute</h2>
+    <ul>
+        <li>_blank:  Opens the linked document in a new window or tab</li>
+        <li>_self - Opens the linked document in the same window/tab as it was clicked (this is default)</li>
+        <li>_parent - Opens the linked document in the parent frame </li>
+        <li>_top - Opens the linked document in the full body of the window</li>
+        <a href="https://www.baidu.com/" target="_blank">百度搜索</a>
+    </ul>
+    <h1>HTML tables</h1>
+    <p>
+        An HTML table is defined with the table tag <br>
+        each table row is defind with <code>tr</code><br>
+        each table heading is defined with <code>th</code><br>
+        each table data/cell is defined with <code>td</code><br>
+        it's able to add a caption with the caption tag <br>
+    </p>
+    <table width="50%">
+        <caption>people statistics</caption>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th> 
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>Jill</td>
+            <td>Smith</td> 
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Eve</td>
+            <td>Jackson</td> 
+            <td>94</td>
+        </tr>
+    </table>
+    <style>
+        tr:nth-child(odd) {
+            color: yellow;
+            background-color: grey;
+        }
+    </style>
+    <h1>HTML lists</h1>
+    <h2>unorder list</h2>
+    <p>
+        "list-style-type" is used to set the list marker <br>
+        we can use disc(default), circle, square or none
+    </p>
+    <ul style="list-style-type:circle">
+        <li>item1</li>
+        <li>item2</li>
+    </ul>
+    <h2>ordered list</h2>
+    <p>
+        "type" is used to set the list marker <br>
+        we can use "1"(default), "A","a","I","i" <br>
+        remeber:  it's to set the type attribute, not the property in the style attribute 
+    </p>
+    <ol type="A">
+        <li>item1</li>
+        <li>item2</li>
+    </ol>
+    <h2>description list</h2>
+    <dl>
+        <dt>term</dt>
+        <dd>description</dd>
+    </dl>
+    <h2>use of list to create a navigation menu</h2>
+    <div>
+        <em>question: cannot see the background-color of ul</em>
+    </div>
+    <ol>
+        Reason: the li elements with float attribute are out of the element flow, they cannot auto fit into the ul;
+        there are 4 solutions
+        <li>set the fixed height for ul</li>
+        <li>set the overflow of ul to hidden or auto <b>(best)</b> </li>
+        <li>make the ul float as well</li>
+        <li>create a div at the end of the div
+            set the clear property of the last element within the ul elment to clear:both</li>
+    </ol>
+    <ul class="navigation" id="navigation">
+        <li><a href="#navigation">home</a></li>
+        <li><a href="#navigation">contact</a></li>
+        <li><a href="#navigation">about</a></li>
+    </ul>
+   
+ 
 
-    
+    <style>
+        .navigation{
+            background-color: #272727;
+        }
+        .navigation li {
+            float: left;
+            padding:5px;
+            margin:5px;
+            list-style-type:none;
+        }
+        .navigation li a{
+            color: red;
+        }
+    </style>
+
+
 
 
 
