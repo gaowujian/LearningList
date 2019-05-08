@@ -260,7 +260,10 @@
         Reason: the li elements with float attribute are out of the element flow, they cannot auto fit into the ul;
         there are 4 solutions
         <li>set the fixed height for ul</li>
-        <li>set the overflow of ul to hidden or auto <b>(best)</b> </li>
+        <li>set the overflow of ul to hidden or auto (best)<br>
+            inspect the web page, we can see the margin of ul, and li elements display in the area out of ul. 
+            so the content overflows,  that's why we use this property to solve this.
+        </li>
         <li>make the ul float as well</li>
         <li>create a div at the end of the div
             set the clear property of the last element within the ul elment to clear:both</li>
@@ -269,6 +272,7 @@
         <li><a href="#navigation">home</a></li>
         <li><a href="#navigation">contact</a></li>
         <li><a href="#navigation">about</a></li>
+        <div id="great"></div>
     </ul>
    
  
@@ -276,6 +280,7 @@
     <style>
         .navigation{
             background-color: #272727;
+            /* overflow: auto; */
         }
         .navigation li {
             float: left;
@@ -287,7 +292,15 @@
             color: red;
         }
     </style>
-
+    <h1>HTML blocks</h1>
+    <h2>two important tags for block element and inline elements</h2>
+    <p>div tag defines a section in a document (block-level)</p>
+    <p>span tag defines a section in a document (inline-level)</p>
+    <h1>HTML iframes</h1>
+    <figure>
+        <figcaption>iframs</figcaption>
+        
+    </figure>
 
 
 
