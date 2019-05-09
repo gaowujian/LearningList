@@ -203,7 +203,7 @@
         each table data/cell is defined with <code>td</code><br>
         it's able to add a caption with the caption tag <br>
     </p>
-    <table width="50%">
+    <table id="table" width="50%">
         <caption>people statistics</caption>
         <tr>
             <th>Firstname</th>
@@ -222,7 +222,7 @@
         </tr>
     </table>
     <style>
-        tr:nth-child(odd) {
+        #table tr:nth-child(odd) {
             color: yellow;
             background-color: grey;
         }
@@ -258,8 +258,9 @@
     </div>
     <ol>
         Reason: the li elements with float attribute are out of the element flow, they cannot auto fit into the ul;
-        there are 4 solutions
+        there are 5 solutions
         <li>set the fixed height for ul</li>
+        <li>use :after css property (recommended)</li>
         <li>set the overflow of ul to hidden or auto (best)<br>
             inspect the web page, we can see the margin of ul, and li elements display in the area out of ul. 
             so the content overflows,  that's why we use this property to solve this.
@@ -291,16 +292,70 @@
         .navigation li a{
             color: red;
         }
+        /* second solution: */
+        /* #navigation:after{
+            content:"";
+            clear: both;
+            display:table;
+        } */
     </style>
     <h1>HTML blocks</h1>
     <h2>two important tags for block element and inline elements</h2>
     <p>div tag defines a section in a document (block-level)</p>
     <p>span tag defines a section in a document (inline-level)</p>
-    <h1>HTML iframes</h1>
-    <figure>
-        <figcaption>iframs</figcaption>
-        
-    </figure>
+    <h1>HTML File Path</h1>
+    <h2>File paths are used when linking to external files like</h2>
+    <ul>
+        <li>web pages</li>
+        <li>images</li>
+        <li>style sheet</li>
+        <li>javascript</li>
+    </ul>
+    <h2>different forms</h2>
+    <style>
+        table{
+            border: black 1px solid;
+            border-collapse: collapse;
+            height: 250px;
+            width: 100%;
+        }
+        table th,td{
+            border: black 1px solid;    
+        }
+    </style>
+    <table>
+        <tr>
+            <th>Path</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td> img src="picture.jpg" </td>    
+            <td>picture.jpg is located in the same folder as the current page</td>
+        </tr>
+        <tr>
+            <td> img src="images/picture.jpg" <br>
+                img src="./images/picture.jpg" </td>
+            <td style="color:red">picture.jpg is located in the images folder in the current folder</td>
+        </tr>
+        <tr>
+            <td> img src="/images/picture.jpg" </td>
+            <td style="color:red">picture.jpg is located in the images folder at the root of the current web</td>
+        </tr>
+        <tr>
+            <td> img src="../picture.jpg" </td>
+            <td>picture.jpg is located in the folder one level up from the current folder</td>
+        </tr>
+    </table>
+    <h1>HTML layout techniques</h1>
+    <p>there are five different ways to create multicolumn layouts, each has its pros and cons</p>
+    <ul>
+        <li>HTML table</li>
+        <li>CSS float property</li>
+        <li>flexbox</li>
+        <li>CSS framework</li>
+        <li>CSS grid</li>
+    </ul>
+
 
 
 
