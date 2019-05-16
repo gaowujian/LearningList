@@ -11,9 +11,9 @@
     <title>Bootstrap</title>
   </head>
   <body>
-
-    <h1>two kinds of containers(F12 inspect查看不同)</h1>
-    <h2>container用于设置width的大小</h2>
+    <h1>Layout</h1>
+    <h3>two kinds of containers(F12 inspect查看不同)</h3>
+    <h3>container用于设置width的大小</h3>
     <div class="container">
       <p>This part is inside a .container class.</p> 
       <p>The .container class provides a responsive fixed width container.(使用mediaquery根据当前的屏幕的width设置container的max-width)</p>   
@@ -44,7 +44,7 @@
 }
       </pre>  
     </div>
-    <h2>row用于设置flex属性表示使用flex布局</h2>
+    <h3>row用于设置flex属性表示使用flex布局</h3>
     <pre>
   .row {
     display: flex;
@@ -53,10 +53,10 @@
     margin-left: -15px;
 }
     </pre>
-    <h2>col用于设置每个flex-item</h2>
+    <h3>col用于设置每个flex-item</h3>
     <p>详细情况请看下一节</p>
     <hr>
-    <h1>Grid basics</h1>
+    <h2>Grid basics</h2>
     <p>Bootstrap's grid system is built with flexbox and allows up to 12 columns across the page.</p>
     <p>.col-*-*有两个参数：第一个参数表示设备，第二个参数表示一个数，最多到12, 将一行分成12分，需要多长用几份</p>
     <p>常用的两栏布局: col-6, 三栏布局: col-4 </p>
@@ -74,7 +74,7 @@
       <div class="col"></div>
     </div>
     <table >
-      <caption style="caption-side:top;text-align:center"><h2>comparision</h2></caption>
+      <caption style="caption-side:top;text-align:center"><h3>comparision</h3></caption>
       
       <tr style="text-align:center">
         <th>col</th>
@@ -120,7 +120,7 @@
         </td>
       </tr>
     </table>
-    <h2>多个class的使用技巧</h2>
+    <h3>多个class的使用技巧</h3>
     <!-- Stack the columns on mobile by making one full-width and the other half-width -->
     <!-- 在手机上是垂直单栏显示，在电脑上是两栏 -->
     <p><mark>多个class的优先级顺序，不取决于调用的先后顺序，取决于声明顺序</mark></p>
@@ -128,7 +128,7 @@
         <div class="col-12 col-md-8" style="background-color:red">.col-12 .col-md-8</div>
         <div class="col-6 col-md-4" style="background-color: yellow">.col-6 .col-md-4</div>
     </div>
-    <h2>alignment</h2>
+    <h3>alignment</h3>
     <style>
       table{
         border:1px solid black;
@@ -169,7 +169,7 @@
         </tr>
     </table>
 
-    <H1>Margin and Padding</H1>
+    <h2>Margin and Padding</h2>
     <p>以1rem=16px作为基础</p>
     <ul>
       <li>1表示0.25rem</li>
@@ -181,13 +181,13 @@
     <p>.mr-3 表示 margin-right:1rem</p>
     <p>.mr-md-3 表示responsive设计，在手机端的时候进行 mrgin-right:1rem</p>
 
-    <h1>Control the visibility</h1>
+    <h2>Control the visibility</h2>
     <p>there are two common ways of controling the visibility of an element</p>
     <ul>
       <li>display:none</li>
       <li>visibility:hidden</li>
     </ul>
-    <h2>Differentces:</h2>
+    <h3>Differentces:</h3>
     <ol>
       <li>display:none不会占据空间也不影响布局，visibility会占用空间也会影响布局</li>
       <li>visibility具有继承性，给父元素设置visibility:hidden;子元素也会继承这个属性。
@@ -204,9 +204,18 @@
             <li style="display:none">元素2</li>
             <li>元素3</li>
           </ol>
-          
       </li>
     </ol>
+
+    <h1>Content</h1>
+    <h2>Reboot</h2>
+    <p>主要讲述了bootstrap基于Normalize做了很多初始化操作，包括全局设置，标题，字体，list以及table等等</p>
+    <h2>Typography</h2>
+    <dl class="row">
+      <dt class="col-sm-3">Description lists</dt>
+      <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+    </dl>
+
 
 
 
