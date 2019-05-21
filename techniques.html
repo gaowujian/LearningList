@@ -7,6 +7,79 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Chrome assignment of values</h1>
+    <pre>
+            let value = 3
+                undefined
+            value
+                3
+            console.log(value)
+                3
+                undefined
+    </pre>
+    <p>在运行chrome developer tool的时候， 当我们输入1，3，5行的代码的时候会出现其他结果，为什么会出现undefined，
+        因为在chrome的环境之后，默认操作是执行这条statement，然后再return value，所以第一条执行完赋值，但是没有返回值就会返回undefined，
+        第二条执行并没有效果，但是返回值就返回了3，第三条执行的时候会打印出3，但是返回值没有所以是undefined
+    </p>
+    <h1>关于width，padding和margin的问题</h1>
+    <p>width的大小和margin没有关系</p>
+    <p>当box-sizing的是content-box：时</p>
+    <p>padding和border不被包含在定义的width和height之内。对象的实际宽度等于设置的width值和border、padding之和，
+            即 ( Element width = width + border + padding )</p>
+    <p>当box-sizing的是border-box：时</p>
+    <p>padding和border被包含在定义的width和height之内。对象的实际宽度就等于设置的width值，即使定义有border和padding也
+        不会改变对象的实际宽度，即 ( Element width = width )</p>
+    <h1>实现闭包</h1>
+    <pre>
+function outside(x) {
+    function inside(y) {
+        return x + y;
+    }
+    return inside;
+    }
+    fn_inside = outside(3); // Think of it like: give me a function that adds 3 to whatever you give
+                            // it
+    result = fn_inside(5); // returns 8
     
+    result1 = outside(3)(5); // returns 8
+    </pre>
+    <p>注意当函数inside返回时，x被保留了.因为外部函数内的变量存在周期比外部函数执行周期长,仔细体会</p>
+    <p>虽然outside函数已经执行结束，但是里边的变量x还在被inner函数所引用</p>
+    <pre>
+var createPet = function(name) {
+    var sex;
+    
+    return {
+        setName: function(newName) {
+        name = newName;
+        },
+        
+        getName: function() {
+        return name;
+        },
+        
+        getSex: function() {
+        return sex;
+        },
+        
+        setSex: function(newSex) {
+        if(typeof newSex === 'string' && (newSex.toLowerCase() === 'male' || 
+            newSex.toLowerCase() === 'female')) {
+            sex = newSex;
+        }
+        }
+    }
+    }
+    
+    var pet = createPet('Vivie');
+    pet.getName();                  // Vivie
+    
+    pet.setName('Oliver');
+    pet.setSex('male');
+    pet.getSex();                   // male
+    pet.getName();                  // Oliver
+    </pre>
+    <p>非常经典的一个使用function创建object的实例</p>
+    <p>保留了外部函数的name和sex变量，通过返回一个由内部函数作为值组成的对象可以对保留的变量进行访问</p>
 </body>
 </html>

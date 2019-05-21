@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Javascript Review</title>
+</head>
+<body class="container">
+    <h1>Javascript Guide</h1>
+    <h2>introduction</h2>
+    <ul>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide">overview</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference">Detailed Reference</a></li>
+    </ul>
+    <p>javascripti is a cross-platform, object-orientated scripting language used to make webpages interactive</p>
+    <p>JavaScript contains a standard library of objects, such as Array, Date, and Math, and a core set of 
+        language elements such as operators, control structures, and statements. Core JavaScript can be extended 
+        for a variety of purposes by supplementing it with additional objects: for example:</p>
+    <ul>
+        <li><strong>Client-side JavaScript</strong> extends the core language by supplying objects to control a browser and its 
+            Document Object Model (DOM). For example, client-side extensions allow an application to place elements 
+            on an HTML form and respond to user events such as mouse clicks, form input, and page navigation.</li>
+        <li><strong>Server-side JavaScript</strong>extends the core language by supplying objects relevant to running JavaScript 
+            on a server. For example, server-side extensions allow an application to communicate with a database, 
+            provide continuity of information from one invocation to another of the application, or perform file 
+            manipulations on a server</li>
+    </ul>
+    <h2>Grammar and types</h2>
+    <h3>Basics and comments</h3>
+    <p>JavaScript is case-sensitive</p>
+    <h3>declaration</h3>
+    <p>there are 3 types of declaration:</p>
+    <dl>
+        <dt>var</dt>
+        <dd>Declares a variable, optionally initializing it to a value, otherwise specified to the value of undefined</dd>
+        <dt>let</dt>
+        <dd>Declares a block-scoped, local variable, optionally initializing it to a value, otherwise specified to the value of undefined</dd>
+        <dt>const</dt>
+        <dd>Declares a block-scoped, read-only named constant, <span class="text-danger">must be initialized</span>.</dd>
+    </dl>
+    <h4>variable</h4>
+    <p>AKA:identifier, start with a letter, _ or $</p>
+    <h5>variable scope</h5>
+    <p>when you declare a variale outside of <span class="text-danger">any function</span>, it is called a global variable, otherwise it's a local variable</p>
+    <h5>variable hoisting</h5>
+    <p>we can refer to a variable declared later without getting an exception， this is called hoisting</p>
+    <p>varibales are hoisted or lifted to the top of function of a statement, 但是在ES6中，使用let关键字不会有hoisting</p> 
+    <pre>
+            var myvar = 'my value';
+ 
+            (function() {
+              console.log(myvar); // undefined
+              var myvar = 'local value';
+            })();
+    </pre>
+    <p>为什么是undefined？主要是两个原因，一个是因为使用了同名变量，另一个是hoisting，所以上面的例子等同于</p>
+    <pre>
+            var myvar = 'my value';
+            (function() {
+              var myvar;
+              console.log(myvar); // undefined
+              myvar = 'local value';
+            })();
+    </pre>
+    <p>在一个function内，variable 会被提前，所以才会出现undefined，如果删掉方法内的myvar 这样也不会报错，因为直接打印的是function外的值</p>
+    <h5>funciton hoisting</h5>
+    <p>For functions, only the function declaration gets hoisted to the top and not the function expression.查看function部分
+        了解什么是definition，什么是expression
+    </p>
+    <p>只有函数声明被提升，但是函数表达式不能提升</p>
+    <ul class="row">
+        <li>函数声明: <pre>foo(); // "bar"
+
+        function foo() {
+            console.log('bar');
+        }</pre></li>
+        <li>函数表达式: <pre>
+                baz(); // TypeError: baz is not a function
+
+        var baz = function() {
+            console.log('bar2');
+        };
+        </pre></li>
+    </ul>
+
+    <h3>Data structures and types</h3>
+    
+    <div class="d-flex">
+        <ul>
+            <caption>there are 8 data types</caption>
+            <li>Boolean</li>
+            <li>null, and it's different from Null, or NULL</li>
+            <li>undefined</li>
+            <li>Number,such as 42, or 3.1415</li>
+            <li>BigInt, an integer with arbitrary precision, such as 901543154n</li>
+            <li>String</li>
+            <li>Symbol, whose data instances are unique and immutable</li>
+            <li>Object</li>
+        </ul>
+        <ul>
+            <caption>there are several literals</caption>
+            <li>Array Literals</li>
+            <li>Bool Literals</li>
+            <li>Floating-point Literals</li>
+            <li>Integers</li>
+            <li>Object Literals</li>
+            <li>RegExp Literals</li>
+            <li>String Literals</li>
+        </ul>
+    </div>
+    <h2>Control flow and error handling</h2>
+    <p>Javascript support a set of statements(语句). statements are seperated with semicolons (;) </p>
+    <ol>
+        <li>
+            <caption>Block statement</caption>
+            <p>it's used to group statement. The block is delimited by a pair of curly bracket.</p>
+            <p>They are commonly used with control flow statements (e.g. if else, while)</p>
+            <p>在ECMAscript 2015(ES6)之前，没有block scope(块级作用域)的概念，换句话说 大括号包含的语句并不能定义一个作用域,
+            在ES6之后，let和const的变量声明是块级作用域的(black scoped)
+            </p>
+        </li>
+        <li>
+            <caption>conditional statement(if else)</caption>
+            <p>the condition evaluates to false, when the value is 0,-0,null,false,NaN,undefined. Otherwise, the condition is true</p>
+            <p>notice! condition是true 和 boolean类型的false是不一样的</p>
+        </li>
+        <li>
+            <caption>conditional statement(switch)</caption>
+            <pre>
+switch (fruittype) {
+    case 'Oranges':
+        console.log('Oranges are $0.59 a pound.');
+        break;
+    case 'Apples':
+        console.log('Apples are $0.32 a pound.');
+        break;
+    }
+            </pre>
+        </li>
+        <li>
+            <caption>exception handling statements(throw)</caption>
+            <p>used to throw and exception, usage: throw  expression</p>
+            <p>throw "Error2"; throw 42</p>
+        </li>
+        <li>
+            <caption>exception handling statements(try..catch)</caption>
+            <p>used to specfiy responses when an exception is thrown</p>
+            <p>The finally block executes whether or not an exception is 
+                thrown. If an exception is thrown, the statements in the finally block execute 
+                even if no catch block handles the exception.</p>
+        </li>
+        <li></li>
+    </ol>
+    <h2>Loops and iteration</h2>
+    <p>there are various situations that are more easily served by one type of loop over ther others</p>
+    <ol>
+        <li>
+            <caption>for statement</caption>
+            <p>无限循环一直到条件判定失败</p>
+            <pre>
+for ([initialExpression]; [condition]; [incrementExpression])
+statement
+            </pre>
+        </li>
+        <li>
+            <caption>do while statement</caption>
+            <p>进行条件判定，至少执行一次，然后无限循环到条件失败</p>
+            <pre>
+do
+statement
+while (condition);
+            </pre>
+        </li>
+        <li>
+            <caption>while statement</caption>
+            <p>执行循环体，无限循环到条件失败</p>
+            <pre>
+while (condition)
+statement
+            </pre>
+        </li>
+        <li>
+            <caption>labeled statement</caption>
+            <p>It provides a statement with an identifier that you can refer to elsewhere in your program</p>
+            <p>给一个statement命名，一般是用于iteration statement, 可以在其他位置进行调用</p>
+            <pre>
+label :
+statement     
+
+markLoop:
+    while (theMark == true) {
+        doSomething();
+    }
+            </pre>
+        </li>
+        <li>
+            <caption>break statement</caption>
+            <p>used to teminate a loop, switch or inconjunction with a labeled statement</p>
+            <p>use break without a label, terminates the innermost(最里面的) enclosing while, do while, for or switch </p>
+            <p>use break with a label, it teminates the specified labeled statement</p>
+            <p>useage: break [label]</p>
+        </li>
+        <li>
+            <caption>continue statement</caption>
+            <p>used to restart a while, do-while, for or labeled statement</p>
+        </li>
+        <li>
+            <caption>for in statement</caption>
+            <p>The for in statement iterates a specified variables over all the enumerable properties of an object</p>
+            <p>用于遍历一个object的属性，且属性是可数属性, 可知对象的所有属性和值</p>
+            <p class="warning">for-in也可以用来遍历一个list但是如下图所示，key针对一般array返回的是index值，针对object返回
+                的是属性名，返回的都是不是value，返回value的话还需要用key做下标，所以不如直接使用for-of方法
+            </p>
+            <pre>
+for (variable in object) {
+    statements
+    }
+
+var obj = {
+    name: 'test',
+    color: 'red',
+    day: 'sunday',
+    number: 5
+}
+for (var key in obj) {
+    console.log(key)
+    console.log(obj[key])
+}
+            </pre>
+        </li>
+        <li>
+            <caption>for of statement</caption>
+            <p>It creates a loop iterating over iterable objects(including Array, Map, Set, arguments object and so on)</p>
+            <p>for in 和 for of之间的区别，for-in取到index，for-of可以取到内容</p>
+            <pre>
+                var arr = [3, 5, 7];
+arr.foo = 'hello';
+
+for (var i in arr) {
+   console.log(i); // logs "0", "1", "2", "foo"
+}
+
+for (var i of arr) {
+   console.log(i); // logs 3, 5, 7
+}
+            </pre>
+        </li>
+    </ol>
+
+    <h2>Functions</h2>
+    <h3>Defining functions</h3>
+    <p>function definition is also called function declaration or function statement</p>
+    <pre>
+function square(number) {
+    return number * number;
+    }
+    </pre>
+    <h3>Function expression</h3>
+    <p>it's another to create a function</p>
+    <p>such as var square = function(number) { return number * number; };</p>
+    <p>function expression is convenient when passing a function as an argument to another function</p>
+    <p class="text-waring">a method is a function that is a property of an object</p>
+    <h3>calling functions</h3>
+    <pre>
+console.log(square); // square is hoisted with an initial value undefined.
+console.log(square(5)); // Uncaught TypeError: square is not a function
+var square = function(n) { 
+  return n * n; 
+}
+    </pre>
+    <p>这是因为: function hoisting only works with function declaration and not with function expression.</p>
+    <h3>function scope</h3>
+    <p> a function can access all variables and functions defined inside the scope in which it is defined</p>
+    <p>A  function defined inside another function can also access all variables defined in its parent function 
+        and any other variable to which the parent function has access.</p>
+    <h3>scope and function stack</h3>
+    <h4>recursion</h4>
+    <p>A function can call itself, there are three ways</p>
+    <ul>
+        <li>the function's name</li>
+        <li>auguments.callee</li>
+        <li>an in-scope varibale that refers to the function</li>
+    </ul>
+    <pre>
+var foo = function bar() {
+    // statements go here
+    };
+    </pre>
+    <p>they are equivalent</p>
+    <ul>
+        <li>bar()</li>
+        <li>arguments.callee()</li>
+        <li>foo()</li>
+    </ul>
+    <p>recursion和loop很像，都是在进行重复操作，都需要一个condition</p>
+    <p>loop可以转化成recursion，recursion也可以转化成loop，但是有时候逻辑会比较麻烦</p>
+    <h4>nested functions and closures</h4>
+    <ul>
+        <li>The inner function can be accessed only from statements in the outer function.</li>
+        <li>The inner function forms a closure: the inner function can use the arguments and 
+            variables of the outer function, while the outer function cannot use the arguments and variables of the inner function.</li>
+    </ul>
+    <h3>closures</h3>
+    <p>Closures are one of the most powerful features of JavaScript. JavaScript allows for the nesting of functions and grants the inner function full access to all the variables and functions defined inside the outer function (and all other variables and functions that the outer function has access to). However, the outer function does not have access to the variables and functions defined inside the inner function. This provides a sort of encapsulation for the variables of the inner function. Also, since the inner function has access to the scope of the outer function, the variables and functions defined in the outer function will live longer than the duration of the outer function execution, if the inner function manages to survive beyond the life of the outer function. A closure is created when the inner function is somehow made available to any scope outside the outer function.</p>
+    <p>查看javascript_learning了解闭包的具体细节</p>
+    <h3>Using the arguments object</h3>
+    <p>每个函数都有一个arguments变量,it's an arrry-like variable，but not same as Array, because it has numbered index and a length property
+        but it doesn't have all of array manipulation method
+    </p>
+    <pre>
+function myConcat(separator) {
+    var result = ''; // initialize list
+    var i;
+    // iterate through arguments
+    for (i = 1; i < arguments.length; i++) {
+        result += arguments[i] + separator; 
+    }
+    return result;
+    }
+    </pre>
+    <h3>Function parameters</h3>
+    <p>从ES6开始以来，我们有了两种新增的parameters</p>
+    <h4>default parameters</h4>
+    <p>一般来说，function的parameter的默认值是undefined，但是有些情况下，需要设置默认值，用法如下</p>
+    <p>function multiply(a,b=2){}</p>
+    <h4>rest parameter</h4>
+    <p>The rest parameter syntax allows us to represent an indefinite number of arguments as an array.</p>
+    <pre>
+function multiply(multiplier, ...theArgs) {
+    return theArgs.map(x => multiplier * x);
+    }
+    var arr = multiply(2, 1, 2, 3);
+    console.log(arr); // [2, 4, 6]
+    </pre>
+    <h3>Arraw Function</h3>
+    <p>arraw function的出现只是简化了function expression但是没有取代function declaration</p>
+    <p>it doesn't have its own <code>this, arguments, super</code> or <code>new.target</code></p>
+    <ul>
+        <p>two factors affect the introduction of arrow function</p>
+        <li>
+            short functions: in functional patterns/programming, shorter functions are welcome.
+        </li>
+        <li>
+            non binding of this:
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ES5 function</th>
+                        <th scope="col">ES5 alternative 1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td>
+                        <pre>
+function Person() {
+    // The Person() constructor defines `this` as itself.
+    this.age = 0;
+    
+    setInterval(function growUp() {
+        // In nonstrict mode, the growUp() function defines `this` 
+        // as the global object, which is different from the `this`
+        // defined by the Person() constructor.
+        this.age++;
+    }, 1000);
+    }
+    
+    var p = new Person();
+                        </pre>
+                    </td>
+                    <td>
+                        <pre>
+function Person() {
+    var self = this; // Some choose `that` instead of `self`. 
+                        // Choose one and be consistent.
+    self.age = 0;
+    
+    setInterval(function growUp() {
+        // The callback refers to the `self` variable of which
+        // the value is the expected object.
+        self.age++;
+    }, 1000);
+    }
+                        </pre>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">ES5 alternative 2</th>
+                        <th scope="col">ES6 arrow function</th>
+                    </tr>
+                    <tr>
+                        <td>
+                                <pre>
+function Person() {
+    // The Person() constructor defines `this` as itself.
+    this.age = 0;
+    
+    function growUp() {
+        // In nonstrict mode, the growUp() function defines `this` 
+        // as the global object, which is different from the `this`
+        // defined by the Person() constructor.
+        this.age++;
+    }
+    growUp.bind(this)()
+    }
+    
+    var p = new Person();
+                                </pre>
+                        </td>
+                            <td>
+                                <pre>
+function Person() {
+    this.age = 0;
+    
+    setInterval(() => {
+        this.age++; // |this| properly refers to the person object
+    }, 1000);
+    }
+    
+    var p = new Person();
+                                </pre>
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+        </li>
+
+    </ul>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>
