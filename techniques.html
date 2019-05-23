@@ -81,5 +81,67 @@ var createPet = function(name) {
     </pre>
     <p>非常经典的一个使用function创建object的实例</p>
     <p>保留了外部函数的name和sex变量，通过返回一个由内部函数作为值组成的对象可以对保留的变量进行访问</p>
+    <h1>识别declaration, assignment 和initialization的区别</h1>
+   <ul>
+       <li>Declaration is not to declare "value" to a variable; it's to declare the type of the variable.</li>
+       <li>Assignment is simply the storing of a value to a variable.</li>
+       <li>Initialization is the assignment of a value to a variable at the time of declaration.(declaration + assignment)</li>
+   </ul>
+   <h1>自己实现js的继承机制</h1>
+   <pre>
+function Employee(name='tony',dept='it'){
+    this.name = name
+    this.dept = dept
+    //必须使用this保证方法的指向，否则的话默认指向了windows对象
+    this.run = function(){
+        console.log('I love running')
+    }
+}
+
+function Manager(){
+    //apply方法使得Manager也可以有Employee的属性的方法
+    Employee.apply(this)
+    this.report = []
+    
+}
+
+var tony = new Manager();
+tony.run()
+   </pre>
+   <h1>Callback</h1>
+   <p>使用一个函数做为参数传入另一个函数，这样的函数叫做回调函数，回调函数的定义出现在外部函数调用的时候，外部函数的参数列表和函数体内只用callback变量替代s</p>
+   <h2>why do we need call back?</h2>
+   <p>you can’t just call one function after another and hope they execute in the right order.(因为可能会有需要等待回应的的异步操作) 
+       Callbacks are a way to make sure certain code doesn’t execute until other code has already finished execution.</p>
+    
+   <h1>Promise机制</h1>
+   <h2>官方案例解析</h2>
+   <a href="https://www.baidu.com/link?url=JRlqW4Qa51urq9ZSAZjhgMr3D72VPbXTV-gYBsOVZcyz3X8bg_vG21g5Ahw4f1EQRbKhZh-x3Ye6oiPHFxHLHrQLscjiflVW0vluFbxZf5ppqE01gH2uom5HaQGkZPaGq_ysvOsk4C7B2M5xIc5nhg32Tyz3r2TUAaUB-5BRxLE6LXR-eFnIZU2Rpz7r845W&wd=&eqid=aebc643d0001ecbe000000065ce5ea91">同时推荐廖雪峰博客，非常清晰</a>
+   <a href="http://es6.ruanyifeng.com/#docs/promise">同时推荐廖雪峰博客，非常清晰</a>
+   <pre>
+new Promise((resolve, reject) => {
+    console.log('Initial');
+
+    resolve();
+})
+.then(() => {
+    throw new Error('Something failed');
+        
+    console.log('Do this');
+})
+.catch(() => {
+    console.log('Do that');
+})
+.then(() => {
+    console.log('Do this, no matter what happened before');
+});
+
+代码解析：
+(resolve, reject) => {
+    console.log('Initial');
+
+    resolve();
+} 等同于一个test函数，所以相当于是new Promise(test)，这一步可以初始化一个Promise对象，并执行test函数
+   </pre>
 </body>
 </html>

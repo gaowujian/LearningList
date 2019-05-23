@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Javascript Review</title>
+    <style>
+        pre{
+            background: rgb(225, 193, 189);
+        }
+    </style>
 </head>
 <body class="container">
     <h1>Javascript Guide</h1>
@@ -232,16 +237,20 @@ for (var key in obj) {
         </li>
         <li>
             <caption>for of statement</caption>
-            <p>It creates a loop iterating over iterable objects(including Array, Map, Set, arguments object and so on)</p>
+            <p class="text-warning">It creates a loop iterating over iterable objects(including Array, Map, Set, arguments object and so on)</p>
             <p>for in 和 for of之间的区别，for-in取到index，for-of可以取到内容</p>
+            <ul>
+                <li>for..of适用遍历数/数组对象/字符串/map/set等拥有迭代器对象的集合.但是不能遍历对象,因为没有迭代器对象.与forEach()不同的是，它可以正确响应break、continue和return语句</li>
+                <li>for-of循环不支持普通对象，但如果你想迭代一个对象的属性，你可以用for-in循环（这也是它的本职工作）或内建的Object.keys()方法</li>
+            </ul>
             <pre>
                 var arr = [3, 5, 7];
 arr.foo = 'hello';
-
+// for-in 把foo属性也计算在内，但是length始终是3，所以有了for-of解决这个问题
 for (var i in arr) {
    console.log(i); // logs "0", "1", "2", "foo"
 }
-
+// for-of 只遍历本身的元素
 for (var i of arr) {
    console.log(i); // logs 3, 5, 7
 }
@@ -428,7 +437,258 @@ function Person() {
         </li>
 
     </ul>
+    <h2>Expressions and operators</h2>
+    <h3>operators</h3>
+    <ul>
+        <li>
+            <caption>assignment operators赋值运算符</caption>
+            <p>new things: Destructuring assignment</p>
+            <p>used to unpack values from arrays, or properties from objects, into distinct values</p>
+            <ul>
+                <caption>advantages</caption>
+                <li>it makes our code more readable</li>
+                <li>performance, Destructuring encourages programmers to put object properties in local variables before using them</li>
+            </ul>
+            <h4>Arrary Destructuring</h4>
+            <ol>
+                <li>basic variable assignment(声明+赋值): var foo = ['one', 'two', 'three']; var [one, two, three] = foo;</li>
+                <li>assignment seperate from declaration(声明和赋值分开): var a, b; [a, b] = [1, 2];</li>
+                <li>Default values: var a, b;[a=5, b=7] = [1]; b的值时7否则是undefined</li>
+                <li>swapping values: var a = 1; var b = 3; [a, b] = [b, a]; 不使用destructuring的话就需要使用一个临时变量</li>
+                <li>ignore some values: var [a, , b] = [1,2,3] 使用逗号预留出空位</li>
+                <li>assigning the rest of an array to a variable: var [a, ...b] = [1, 2, 3]; </li>
+            </ol>
+            <h4>Object Destructing</h4>
+            <ol>
+                <li>basic assignment:(声明+赋值) var o = {p: 42, q: true}; var {p, q} = o; </li>
+                <li>assigment without declaration: (声明和赋值分开) var a,b; ({a, b} = {a: 1, b: 2}); <br>
+                分开的情况下，必须在外边使用()，因为左边的{a,b}被识别成一个block而不是一个literal</li>
+                <li>assgining to a new variable(使用新的变量名): var o = {p: 42, q: true}; var {p: foo, q: bar} = o;</li>
+                <li>default values: var {a = 10, b = 5} = {a: 3};</li>
+                <li>assigning to new varibales names and providing default values: var {a: aa = 10, b: bb = 5} = {a: 3};</li>
+                <li>nested object and array destructuring: 分解时，遵守一一对应的原则，保证[]和{}对应进行赋值，<br>
+                注意分解数组时候可以直接修改变量名，分解对象时修改变量名需要 old:new, 同时原变量名会直接释放 </li>
+                <li>for of iteration and destructuring:</li>
+                <li>unpacking fields from objects passed as function parameter</li>
+                <li>rest in object Destructing</li>
+                <li>combined Array and Object Destructuring</li>
+            </ol>
+        </li>
+        <li>Comparison operators 比较运算符 (==,!=,===,!==,>,<,>=,<=) </li>
+        <li>Arithmetic operators 算数运算符</li>
+        <li>bitwise operators 位运算符</li>
+        <li>Logical operators 逻辑运算符 (&&,||,!)</li>
+        <li>String operators 字符串运算符(+)</li>
+        <li>conditional(ternary) operators 条件运算符/三元运算符(?:)</li>
+        <li>comma operations 逗号运算符()</li>
+        <li>
+            <caption>unary operators 一元运算符</caption>
+            <ul>
+                <li>delete: deletes an object, an object's property, or an element at a specified index in an array <br>
+                只能删除没有显示申明的变量，例如 x =10，但是 var x =10不可以删除</li>
+                <li>typeof: typeof (operand) 括号是可选的 返回一个string</li>
+                <li>void: void(expression) https://www.quackit.com/javascript/tutorial/javascript_void_0.cfm</li>
+            </ul>
+        </li>
+        <li>
+            <caption>Relational operators 关系运算符</caption>
+            <ul>
+                <li>in： 检测对象是否有某个属性(等同于hasOwnProperty)  propNameOrNumber in objectName</li>
+                <li>instanceof: 判断对象是不是指定类型 propNameOrNumber in objectName</li>
+            </ul>
+        </li>
+    </ul>
+    <h3>Expression</h3>
+    <p>expression is any valid unit of code that resolves a value</p>
+    <h2>Numbers and Dates</h2>
+    <h2>Text formatting</h2>
+    <h3 class="text-warning">String</h3>
+    <p>string 和String对象是不同的. String Object is a wrapper around the string primitive data type</p>
+    <p>但是我们可以使用任何string来调用String对象的方法，这是因为Javascript会自动将string字面值转化为String对象</p>
+    <p>所以尽量使用string字面值，而不用使用String对象</p>
+    <h3>Internationalization</h3>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Text_formatting">check the link for more information</a>
+    <h2>Regular expressions</h2>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">check the link for more information</a>
+    <h2>indexed collections</h2>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Indexed_collections">check the link for more information</a>
+    <h2>keyed collections</h2>
+<p></p>
+    <h3>Maps</h3>
+    <p>A map object is a simple key/value map and can iterate its elements in insertion order</p>
+    <h4>advanages of Map over Object</h4>
+    <ul>
+        <li>keys of an object are Strings, where they can be of any type for a Map</li>
+        <li>easy to get the size of a Map with map.size()</li>
+        <li>the iteration of a map is in insertion order of the elements</li>
+        <li>An Object has a prototype, so there are default keys in the map. (this can be bypassed using map = Object.create(null)).</li>
+    </ul>
+    <h3>Sets</h3>
+    <p>A set is a collection of unique values</p>
+    <p>conversion between Array and Set:  Array.from    [...mySet] = new Set([1,2,3])</p>
+    <h4>advanages of Set over Array</h4>
+    <ul>
+        <li>Checking whether an element exists in a collection using indexOf for arrays is slow.</li>
+        <li>Set objects let you delete elements by their value. With an array you would have to splice based on an element's index.</li>
+        <li>The value NaN cannot be found with indexOf in an array.</li>
+        <li>Set objects store unique values; you don't have to keep track of duplicates by yourself.</li>
+    </ul>
+    <h2>Object</h2>
+    <ul>
+        <li>access properties: objectName.propertyName</li>
+        <li>Enumerate the properties of an object:
+            <ul>
+                <li>for-in loop：This method traverses all enumerable properties of an object and its prototype chain</li>
+                <li>Object.keys(o)：This method returns an array with all the own (not in the prototype chain) enumerable properties' names ("keys") of an object o</li>
+                <li>Object.getOwnPropertyNames(o)：This method returns an array containing all own properties' names (enumerable or not) of an object o.</li>
+            </ul>
+        </li>
+        <li>
+            creating new objects <br>
+            three ways:
+            <ol>
+                <li>using object initializer: <br>
+                    obj 和 = 都是可选的，如果在其他的地方不需要使用这个object，可以省略
+                    <pre>
+var obj = { name:  'wujian', 
+    age:  18,  
+    run: function(){
+        //注意如果没有return语句，只有console.log语句的话，在chrome dev tool里是不会有输出信息的
+        console.log('he is so fast')
+        return "he is so fat"
+    } }; 
+                    </pre>
+                </li>
+                <li>using a constructor function: <br>
+                    there are two steps:
+                    <ul>
+                        <li>define the object type by writing a constructor function (good convention: capital initial letter) 
+                            <pre>
+function Car(make, model, year) {
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    //注意使用的语法
+    this.run = function(){
+        console.log("it's fast")
+        return "it's fast"
+    };
+    }
+                            </pre>
+                        </li>
+                        <li>create an instance of the object with new
+                            <pre>
+var mycar = new Car('Eagle', 'Talon TSi', 1993);
+                            </pre>
+                        </li>
+                        <br>
+                    </ul>
+                </li>
+                <li>using the Object.create method</li>     
+                <p>it's useful when you have already have a prototype object you want to create, 需要借助第一种创建方法</p>
+                <p class="bg-warning">使用这种方法创建对象后，我尝试使用之前的三种方法查看属性，但是之后for-in的方法可以查到继承的属性</p>
+                <pre>
+// Animal properties and method encapsulation
+var Animal = {
+    type: 'Invertebrates', // Default value of properties
+    displayType: function() {  // Method which will display type of Animal
+    console.log(this.type);
+    }
+};
+
+// Create new animal type called animal1 
+var animal1 = Object.create(Animal);
+animal1.displayType(); // Output:Invertebrates
+                </pre>
+            </ol>
+        </li>
+        <li>defining properties for an object type: object.prototype.propertyName = value</li>
+        <li>defining setters and getters (two properties): <br>
+            two ways:
+            <ol>
+                <li>defined by object initializer
+                    <pre>
+var o = {
+    a: 7,
+    get b() { return this.a + 1; },
+    set c(x) { this.a = x / 2; }
+    };
+                    </pre>
+                </li>
+                <li>add later to any object at any time usign a getter or setter adding method
+                    <pre>
+var o = { a: 0 };
+
+Object.defineProperties(o, {
+    'b': { get: function() { return this.a + 1; } },
+    'c': { set: function(x) { this.a = x / 2; } }
+});                        
+                    </pre>
+                </li>
+            </ol>
+        </li>
+    </ul>
+    <h2 >details of the object model</h2>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Details_of_the_Object_Model">check the link for more information</a>
+    <h2>Using promises</h2>
+    <p>A promise is an object representing the eventual completion or failture of asynchronous operation</p>
+    <p>Essentially, a promise is a returned object to which you attach callbacks, instead of passing callbacks into a function.</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>previous</th>
+                <th>current</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <pre>
+function successCallback(result) {
+    console.log("Audio file ready at URL: " + result);
+    }
     
+    function failureCallback(error) {
+    console.log("Error generating audio file: " + error);
+    }
+    
+    createAudioFileAsync(audioSettings, successCallback, failureCallback);
+                    </pre>
+                </td>
+                <td>
+                    <pre>
+const promise = createAudioFileAsync(audioSettings); 
+promise.then(successCallback, failureCallback);
+// the shorthand is below
+createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
+                    </pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ol>
+        <p>advantages of Promise</p>
+        <li>Guarantees
+            <ul>
+                <li>回调用云在当前js事件流完成后触发: callbacks will never be called before the completion of the current run of the Javascript event loop</li>
+                <li>回调在异步调用之后触发: callbacks added with then even after the success or failure of the asynchronous call, will be called, as above</li>
+                <li>多回调按顺序执行: Multiple callbacks may be added by calling then() several times. Each callback is executed one after another, in the order in which they were inserted.</li>
+            </ul>
+        </li>
+        <li>Chaining</li>
+        <p>then() function can create a new promise, different from the original one</p>
+        <p>catch(failureCallback) is short for then(null,failureCallback).catch, which is useful to accomplish new actions even after an action failed in the chain</p>
+        <p>important!!! Always return results, otherwise callbacks won't catch the result of a previous promise (with arrow functions () => x is short for () => { return x; }).</p>
+        <li>Chaining after a catch</li>
+        <li>Error propogation</li>
+        <li>Promise rejection events</li>
+        <li>Creating a Promise around an old callback API <br>
+            A Promise can be created from scratch using its constructor. This should be needed only to wrap old APIs. <br>
+            In an ideal world, all asynchronous functions would already return promises. Unfortunately, some APIs still 
+            expect success and/or failure callbacks to be passed in the old way. The most obvious example is the setTimeout() function:
+        </li>
+    </ol>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
