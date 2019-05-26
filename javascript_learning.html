@@ -8,7 +8,12 @@
     <title>Javascript Review</title>
     <style>
         pre{
+            display: block;
+            width:100%;
             background: rgb(225, 193, 189);
+        }
+        h1,h2,h3,h4,h5,h6{
+            text-transform: capitalize
         }
     </style>
 </head>
@@ -537,7 +542,7 @@ function Person() {
     <ul>
         <li>access properties: objectName.propertyName</li>
         <li>Enumerate the properties of an object:
-            <ul>
+            <ul class="bg-warning">
                 <li>for-in loop：This method traverses all enumerable properties of an object and its prototype chain</li>
                 <li>Object.keys(o)：This method returns an array with all the own (not in the prototype chain) enumerable properties' names ("keys") of an object o</li>
                 <li>Object.getOwnPropertyNames(o)：This method returns an array containing all own properties' names (enumerable or not) of an object o.</li>
@@ -670,7 +675,7 @@ createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
         <p>advantages of Promise</p>
         <li>Guarantees
             <ul>
-                <li>回调用云在当前js事件流完成后触发: callbacks will never be called before the completion of the current run of the Javascript event loop</li>
+                <li>回调将在在当前js事件流完成后触发: callbacks will never be called before the completion of the current run of the Javascript event loop</li>
                 <li>回调在异步调用之后触发: callbacks added with then even after the success or failure of the asynchronous call, will be called, as above</li>
                 <li>多回调按顺序执行: Multiple callbacks may be added by calling then() several times. Each callback is executed one after another, in the order in which they were inserted.</li>
             </ul>
@@ -688,7 +693,23 @@ createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
             expect success and/or failure callbacks to be passed in the old way. The most obvious example is the setTimeout() function:
         </li>
     </ol>
-
+    <h2>Iterators and generators</h2>
+    <h3>iteration protocol: iterable protocol and iterator protocal</h3>
+    <p>The iterable protocol allows JavaScript objects to define or customize their iteration behavior
+        , such as what values are looped over in a for..of construct. Some built-in types are built-in iterables with a default iteration behavior, such as Array or Map, while other types (such as Object) are not. </p>
+    <h3>Symbol</h3>
+    <p>symbol is also a primitive value</p>
+    <p>Symbol([description])  Description: Optional, string. A description of the symbol which can be used for debugging but not to access the symbol itself.</p>
+    <h2>Meta programming</h2>
+    <a href="#">详情后续</a>
+    <h1>intermediate</h1>
+    <h2>Introducing Javascript object</h2>
+    <h3>Object Basics</h3>
+    <p>查看之前的基础内容</p>
+    <h3>Object-orientated Javascript for beginners</h3>
+    <p>查看之前的基础内容</p>
+    <h3>Object Prototype</h3>
+    <p></p>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
