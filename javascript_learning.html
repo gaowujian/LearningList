@@ -472,7 +472,29 @@ function Person() {
                 <li>default values: var {a = 10, b = 5} = {a: 3};</li>
                 <li>assigning to new varibales names and providing default values: var {a: aa = 10, b: bb = 5} = {a: 3};</li>
                 <li>nested object and array destructuring: 分解时，遵守一一对应的原则，保证[]和{}对应进行赋值，<br>
-                注意分解数组时候可以直接修改变量名，分解对象时修改变量名需要 old:new, 同时原变量名会直接释放 </li>
+                注意分解数组时候可以直接修改变量名，分解对象时修改变量名需要 old:new, 同时原变量名会直接释放 
+                <pre>
+let {name,habits:[first,,third],city:{current}} =  {
+    name: "Tony",
+    age: 18,
+    job: "Developer",
+    habits:["singing","programming","learning English"],
+    city:{
+        current: "Sydney",
+        previous:"Shijian Zhuang"
+    }
+}
+console.log(name)
+console.log(first)
+console.log(third)
+console.log(current)
+//Result:
+// Tony
+// singing
+// learning English
+// Sydney
+                </pre>
+            </li>
                 <li>for of iteration and destructuring:</li>
                 <li>unpacking fields from objects passed as function parameter</li>
                 <li>rest in object Destructing</li>
@@ -710,6 +732,87 @@ createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
     <p>查看之前的基础内容</p>
     <h3>Object Prototype</h3>
     <p></p>
+    <h3>Inheritance in Javascript</h3>
+    <h3>JSON</h3>
+    <p>JavaScript Object Notation (JSON) is a standard text-based format for representing structured data based on JavaScript object syntax. It is commonly used for transmitting data in web applications (e.g., sending some data from the server to the client, so it can be displayed on a web page, or vice versa).</p>
+    <p> <b> JSON exists as a string</b> — useful when you want to transmit data across a network. It needs to be converted to a native JavaScript object when you want to access the data. This is not a big issue —  JavaScript provides a global JSON object that has methods available for converting between the two.</p>
+    <p class="bg-warning">Note: Converting a string to a native object is called parsing, while converting a native object to a string so it can be transmitted across the network is called stringification.</p>
+    <p>A JSON object can be stored in its own file, which is basically just a text file with an extension of .json, and a MIME type of application/json.</p>
+    <h4>JSON structure</h4>
+    <p>A JSON is a string whose format resembles very much JavaScript object literal format</p>
+    <h4>Array as JSON</h4>
+    <p>JSON is almost like a Javascript object, the reason is that <span class="text-danger">an array is also valid JSON</span> , for example</p>
+    <pre>
+            [
+      {
+        "name": "Molecule Man",
+        "age": 29,
+        "secretIdentity": "Dan Jukes",
+        "powers": [
+          "Radiation resistance",
+          "Turning tiny",
+          "Radiation blast"
+        ]
+      },
+      {
+        "name": "Madame Uppercut",
+        "age": 39,
+        "secretIdentity": "Jane Wilson",
+        "powers": [
+          "Million tonne punch",
+          "Damage resistance",
+          "Superhuman reflexes"
+        ]
+      }
+    ]
+    for example [0]["powers"][0].
+    </pre>
+    <h4>other userful notes</h4>
+    <ul>
+        <li>JSON is purely a data format — it contains only properties, no methods.</li>
+        <li>JSON requires double quotes to be used around strings and property names. Single quotes are not valid. For object literal, it's not necessary</li>
+        <li>Unlike in JavaScript code in which object properties may be unquoted, in JSON, only quoted strings may be used as properties. <br>
+        对于JS对象来说，属性名可以不使用引号括起来，使用引号的话，可以使用单引号或者双引号，但是对于JSON来说，属性名必须用双引号</li>
+    </ul>
+    <h2>Client-side web APIs</h2>
+    <h3>Introduction to web APIs</h3>
+    <h4>what are APIs</h4>
+    <p>Application Programming Interfaces (APIs) are constructs made available in programming languages to allow developers to create complex functionality more easily. They abstract more complex code away from you, providing some easier syntax to use in its place.</p>
+    <h4>APIs in client-side Javascript</h4>
+    <p>relationship between API, libraries and framework</p>
+    <ul>
+        <li>Third party APIs — constructs built into third-party platforms (e.g. Twitter, Facebook) that allow you to use some of those platform's functionality in your own web pages (for example, display your latest Tweets on your web page).</li>
+        <li>JavaScript libraries — Usually one or more JavaScript files containing custom functions that you can attach to your web page to speed up or enable writing common functionality. Examples include jQuery, Mootools and React.</li>
+        <li>JavaScript frameworks — The next step up from libraries, JavaScript frameworks (e.g. Angular and Ember) tend to be packages of HTML, CSS, JavaScript, and other technologies that you install and then use to write an entire web application from scratch. The key difference between a library and a framework is “Inversion of Control”. When calling a method from a library, the developer is in control. With a framework, the control is inverted: the framework calls the developer's code.</li>
+    </ul>
+    <h4>what can APIs do?</h4>
+    <h5 class="bg-dark text-white">use of Common browse APIs</h5>
+    <ul>
+        <li>manipulating documents</li>
+        <li>
+            <caption>fetch data from the server</caption>
+            <p>why do we need these APIs?</p>
+            <p>Sometimes we need to update only part of the website, it's wasteful to load an entire page</p>
+            <p>Loading some chunks of HTML, XML, JSON or plain text can be achieved by usign APIs like XMLHttpRequest or Fetch API</p>
+            <ul>
+                <li>
+                    <b>XMLHttpRequest(often abbreviated to XHR)</b>
+                    <p>You can retrieve data from a URL without having to do a full page refresh.</p>
+                    <p>Despite its name, XMLHttpRequest can be used to retrieve any type of data, not just XML. It's because we often use this way to retrive XML data before</p>
+
+                </li>
+                <li>
+                    <b>Fetch API</b>
+                </li>
+            </ul>
+        </li>
+        <li>drawing and manipulating graphics</li>
+        <li>Audio and Video APIs</li>
+        <li>Device APIs</li>
+        <li>Client-side Storage</li>
+    </ul>
+    
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
