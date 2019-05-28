@@ -317,8 +317,13 @@ var foo = function bar() {
             variables of the outer function, while the outer function cannot use the arguments and variables of the inner function.</li>
     </ul>
     <h3>closures</h3>
-    <p>Closures are one of the most powerful features of JavaScript. JavaScript allows for the nesting of functions and grants the inner function full access to all the variables and functions defined inside the outer function (and all other variables and functions that the outer function has access to). However, the outer function does not have access to the variables and functions defined inside the inner function. This provides a sort of encapsulation for the variables of the inner function. Also, since the inner function has access to the scope of the outer function, the variables and functions defined in the outer function will live longer than the duration of the outer function execution, if the inner function manages to survive beyond the life of the outer function. A closure is created when the inner function is somehow made available to any scope outside the outer function.</p>
-    <p>查看javascript_learning了解闭包的具体细节</p>
+    <p>Closures are one of the most powerful features of JavaScript. JavaScript allows for the nesting of functions and grants the inner function 
+        full access to all the variables and functions defined inside the outer function (and all other variables and functions that the outer function 
+        has access to). However, the outer function does not have access to the variables and functions defined inside the inner function. This provides a sort
+         of encapsulation for the variables of the inner function. Also, since the inner function has access to the scope of the outer function, the variables and 
+         functions defined in the outer function will live longer than the duration of the outer function execution, if the inner function manages to survive 
+         beyond the life of the outer function. <span class="text-danger">A closure is created when the inner function is somehow made available to any scope outside the outer 
+        function. 当外部函数将内部函数作为return的返回值的时候，就会形成一个闭包</span> </p>
     <h3>Using the arguments object</h3>
     <p>每个函数都有一个arguments变量,it's an arrry-like variable，but not same as Array, because it has numbered index and a length property
         but it doesn't have all of array manipulation method
@@ -811,7 +816,25 @@ createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
         <li>Device APIs</li>
         <li>Client-side Storage</li>
     </ul>
-    
+    <h2>A re-introduction to JavaScript</h2>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript">A good summary for quick review</a>
+    <h2>JavaScript data structures</h2>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">quick review for data types</a>
+    <h2>Equality comparison and sameness</h2>
+    <ul>
+        <li>double equals (==) will perform a type conversion when comparing two things, and will handle NaN, -0, and +0 specially to conform to IEEE 754 (so NaN != NaN, and -0 == +0);</li>
+        <li>triple equals (===) will do the same comparison as double equals (including the special handling for NaN, -0, and +0) but without type conversion; if the types differ, false is returned.</li>
+        <li>Object.is does no type conversion and no special handling for NaN, -0, and +0 (giving it the same behavior as === except on those special numeric values).</li>
+    </ul>
+    <h2>closure</h2>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">see details here</a>
+    <p>Closures are useful because they let you associate some data (the lexical environment) with a function that operates on that data.</p>
+    <p>This has obvious parallels to object-oriented programming, where objects allow us to associate some data (the object's properties) with one or more methods.</p> 
+    <p>闭包是很有用的 因为它让我们可以将数据和函数联系起来，并且这个函数可以使用这些数据</p>
+    <p>这和面向对象编程是非常相近的，面向对象编程就是把数据和一些方法联系起来, 通常情况下，这些数据就是对象的属性</p>
+    <p>闭包的外部函数就好像是实例化了一个对象，创建了一个操作空间，提供了一个基本环境，即定义了对象的属性</p>
+    <p>闭包的内部函数就和对象的方法相近，都是在对基本环境的数据进行操作，也能接受来自外部的参数</p>
+
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
