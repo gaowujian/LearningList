@@ -834,6 +834,124 @@ createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
     <p>这和面向对象编程是非常相近的，面向对象编程就是把数据和一些方法联系起来, 通常情况下，这些数据就是对象的属性</p>
     <p>闭包的外部函数就好像是实例化了一个对象，创建了一个操作空间，提供了一个基本环境，即定义了对象的属性</p>
     <p>闭包的内部函数就和对象的方法相近，都是在对基本环境的数据进行操作，也能接受来自外部的参数</p>
+    <h2>several keywords learning</h2>
+    <table class="table" >
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col" >Export</th>
+            <th scope="col" >Import</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Definition</th>
+            <td>The export statement is used when creating JavaScript modules to export <span class="text-danger">functions, objects, or primitive values</span>  from the module so they can be used by other programs with the import statement.</td>
+            <td>The static import statement is used to import features into JavaScript modules that have been exported by another module.</td>  
+        </tr>
+        <tr>
+            <td colspan="3">To apply a module script to an HTML document, you need to use a &lt;script&gt; of type="module". The import statement cannot be used in non-module scripts </td>
+        </tr>
+          <tr>
+            <th scope="row">individual features</th>
+            <td>
+                <pre>
+export let name1, name2, …, nameN; // also var, const
+export let name1 = …, name2 = …, …, nameN; // also var, const
+export function functionName(){...}
+export class ClassName {...}
+e.g.
+// export individual features (can export var, let,
+// const, function, class)
+export let myVariable = Math.sqrt(2);
+export myFunction() { ... };
+// export features declared earlier
+export { myFunction, myVariable }; 
+                </pre>
+            </td>
+            <td>
+                <pre>
+这里的{}不可以省略，否则会去查找该module的default
+import { export } from "module-name";
+e.g.
+import {name} from "./test1.js"
+                </pre>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">export list</th>
+            <td>
+                <pre>
+export { name1, name2, …, nameN };
+e.g.
+//之前定义的变量，只需列出变量名并且加括号，如果是declaration和assignment在一起的话就不需要括号，只需要逗号连接
+export{name,fn}
+export let name ="wujian", fn = (a,b)=>{
+    return a+b
+};
+                </pre>
+            </td>
+            <td>
+                <pre>
+import { export1 , export2 } from "module-name";
+e.g.
+import {name,fn} from "./test1.js"
+                </pre>
+            </td>
+          </tr>
+          <tr>
+              <th scope="row">renaming</th>
+              <td>
+                  <pre>
+export { variable1 as name1, variable2 as name2, …, nameN };
+e.g.
+let name ="wujian"
+let fn = (a,b)=>{
+    return a+b
+}
+export {name as name1, fn as fn1}
+                  </pre>
+              </td>
+              <td>
+                  <pre>
+// Import renamed exports, 在export和import两端都可以进行重命名操作 
+import { export as alias } from "module-name";
+e.g.
+import {name1 as name2,fn1 as fn2} from "./test1.js"
+console.log(name2,fn2)
+                  </pre>
+              </td>
+          </tr>
+          <tr>
+              <th scope="row">default(一般来说，设置成default是函数或者类，不会是基础类型)</th>
+              <td>
+                  <pre>
+// export individual features as default
+export default myFunction() { ... } 
+export default class { .. }
+// export feature declared earlier as default
+export { myFunction as default };
+e.g.
+let fn = (a,b)=>{
+    return a+b
+}
+export {fn as default}
+//也可以将基础值作为默认值，但是不常用，这个时候可以省略var，let和const关键字
+export default name = "tony";
+                  </pre>
+              </td>
+              <td>
+                  <pre>
+// Import default export, 变量名可以随便取，import的时候不加括号就是引入default
+import defaultExport from "module-name";
+e.g.
+import test1 from "./test1.js"
+console.log(test1)
+                  </pre>
+              </td>
+          </tr>
+        </tbody>
+      </table>
 
     
     <!-- Optional JavaScript -->
