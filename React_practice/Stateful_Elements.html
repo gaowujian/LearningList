@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practice</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+
+    有一些要注意的点
+    <ol>
+      <li>元素继承自React.Component  注意关键字，不要全小写，也不要加s</li>
+      <li>注意render的用法，在使用class的时候,render是在内部是定义函数，要保证render(){}的形式</li>
+      <li>注意在class当中 render函数 返回的时候只能够返回一个元素 所以用div在最外层包裹起来</li>
+      <li>注意这里用到了父亲组件向孩子组件传递数据，将自己的state数据传给了子组件的props</li>
+    </ol>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+    function Greeting(props){
+      const isLoggedin = props.isLoggedin
+      if(isLoggedin){
+        return <h1>Welcome back!</h1>;
+      }
+        return <h1>please sign in</h1>
+    }
+    
+
+
+    class LoginControl extends React.Component{
+      constructor(props){
+        super(props)
+        this.state = {isLoggedin:false}
+        this.hasLoggedIn = this.hasLoggedIn.bind(this)
+        this.hasLoggedOut = this.hasLoggedOut.bind(this)
+      }
+      hasLoggedIn(){
+        this.setState({isLoggedin:true})
+      }
+      hasLoggedOut(){
+        this.setState({isLoggedin:false})
+      }
+      render(){
+        const isLoggedin = this.state.isLoggedin
+        let button;
+        if(isLoggedin){
+          button = <button onClick = {this.hasLoggedOut}>Log Out</button>
+        }
+        else{
+          button = <button onClick = {this.hasLoggedIn}>Log In</button>
+        }
+        return (
+          <div>
+            <Greeting isLoggedin={this.state.isLoggedin}/>
+            {button}
+          </div>
+
+          )
+        
+      }
+
+    }
+            ReactDOM.render(
+          <LoginControl />,
+          document.getElementById('root')
+        );
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>React-learning</title>
+</head>
+<body class="container">
+
+    <!-- 这两行代码用来引入react,这样的话就可以在前端开始使用react了 -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!-- 引入babel用来写JSX语句 -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <style>
+        pre{
+            display: block;
+            width:100%;
+            background: rgb(225, 193, 189);
+        }
+        h1,h2,h3,h4,h5,h6{
+            text-transform: capitalize
+        }
+    </style>
+    <h1>Introducing JSX</h1>
+    <h2>why JSX?</h2>
+    <p>React embrace the fact that rendering logic is inherently couple with other UI logic</p>
+    <p>React doesn't require JSX, but many people find it helpful</p>
+    <h2>Embedding expressions in JSX</h2>
+    <h2>JSX is an Expression Too</h2>
+    <p>It can be used inside of if statements and for loops</p>
+    <h2>specifying attributes with JSX</h2>
+    <p>You should either use quotes (for string values) or curly braces (for expressions), but not both in the same attribute.</p>
+    <pre>
+const element = &lt;div&gt; tabIndex="0"&gt;&lt;/div&gt;
+const element = &lt;img src={user.avatarUrl}&gt;&lt;/img&gt;
+    </pre>
+    <div  style="border-left:10px solid #ffe564 !important; background-color: rgba(255,229,100,0.3)">
+        <p>Warning:</p>
+        <p>Since JSX is closer to JavaScript than to HTML, React DOM uses camelCase property naming convention instead of HTML attribute names.</p>
+        <p>For example, class becomes className in JSX, and tabindex becomes tabIndex.</p>
+    </div>
+    <h2>JSX Represents Objects</h2>
+    <p>Babel compiles JSX down to React.createElement() calls.</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>JSX</th>
+                <th>React Native</th>
+                <th>ES6 result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <pre>
+const element = (
+    &lt;h1 className="greeting"&gt;
+    Hello, world!
+    &lt;/h1&gt;
+);
+                    </pre>
+                </td>
+                <td>
+                    <pre>
+const element = React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
+);
+                    </pre>
+                </td>
+                <td>
+                    <pre>
+//simplied result
+const element = {
+    type: 'h1',
+    props: {
+        className: 'greeting',
+        children: 'Hello, world!'
+    }
+};
+                    </pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h1>Rendering elements</h1>
+    <p>react element 可以查看上面的例子 const element = &lt;h1&gt; Hello, world&lt;/h1&gt; </p>
+    <p>Unlike browser DOM elements, React elements are plain objects, and are cheap to create. React DOM takes care of updating the DOM to match the React elements.</p>
+    <h2>rendering an element into the DOM</h2>
+    <p>To render a React element into a root DOM node, pass both to ReactDOM.render():</p>
+    <pre>
+const element = &lt;h1&gt; Hello, world&lt;/h1&gt; 
+ReactDOM.render(element, document.getElementById('root'));
+    </pre>
+    <h2>updating the rendered elements</h2>
+    <p>React通过stateful component进行更新</p>
+    <h1>components and props</h1>
+    <h2>function and class components</h2>
+    <p>component可以接受参数，并返回react elment</p>
+    <p>function and ES6 class are both a valid React component</p>
+    <div class="row">
+        <div class="col">
+            <pre>
+function Welcome(props) {
+    return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+    }
+            </pre>
+        </div>
+        <div class="col">
+            <pre>
+                <pre>
+class Welcome extends React.Component {
+    render() {
+        return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;;
+        }
+    }
+                </pre>
+            </pre>
+        </div>
+    </div>
+    <h2>composing components</h2>
+    <p>Components can refer to other components in their output. </p>
+    <p>App is a component and it includes others</p>
+    <pre>
+function App() {
+    return (
+        &lt;div&gt;
+            &lt;Welcome name="Sara" /&gt;
+            &lt;Welcome name="Cahal" /&gt;
+            &lt;Welcome name="Edite" /&gt;
+        &lt;/div&gt;
+    );
+    }
+    </pre>
+    <h2>Props are read-only</h2>
+    <p>All React components must act like pure functions with respect to their props.</p>
+    <p>pure functions are functions that do not attempt to change their inputs, and always return the same result for the same inputs.</p>
+    <p>this is the example of an impure function</p>
+    <pre>
+        function withdraw(account, amount) {
+            account.total -= amount;
+          }
+    </pre>
+    <p>So in React, we use "state" to allow components to change outputs over time in response to user actions, network responses, and anything else</p>
+    <h1>state and lifestyle</h1>
+    <p>state is similar to props, but it is private and fully controlled by the component</p>
+    <p>感觉其实根本是将局部的props绑定到了一个this上实现了持久化</p>
+    <h2>converting a function to a class</h2>
+    <ol>
+        <li></li>
+    </ol>
+    <h2>add local state to a class</h2>
+    <h2>add lifecycle methods to a class</h2>
+    <p>We want to set up a timer whenever the Clock is rendered to the DOM for the first time. This is called “mounting” in React.在这里设置一个timer每隔一秒调用一次setState方法即可以实现数据的更新</p>
+    <p>We also want to clear that timer whenever the DOM produced by the Clock is removed. This is called “unmounting” in React.</p>
+    <h2>Using state correctly</h2>
+    <ol>
+        we have three things to know about setState()
+        <li>Do not modify state directly
+            <pre>
+// Wrong (初始化只存在于constructor中)
+this.state.comment = 'Hello';
+// Correct
+this.setState({comment: 'Hello'});
+            </pre>
+        </li> 
+        <li>State Updates May Be Asynchronous <br>
+        state的更新是通过调用setState方法，一般使用setInterval，因为有的时候数据更新是异步的, setState同样也接受函数作为参数
+        </li>
+        <li>
+            state updates are merged <br>
+            可以创建不同的方法对不同的state属性进行复制，React会将提供的参数对象融入到当前的状态中
+        </li>
+    </ol>
+    <h2>the data flows down</h2>
+    <ul>
+        <li>parent component can pass its state down as props to its child components <br>
+            &lt;h2&gt;It is {this.state.date.toLocaleTimeString()}.&lt;/h2&gt;
+        </li>
+        <li>
+            This also works for user-defined components: <br>
+            &lt;FormattedDate date={this.state.date} /&gt;
+        </li>
+    </ul>
+    <p>子组件没办法知道这些数据是不是来自于父亲组件的state，或者是props又或者是手动输入</p>
+    <p>this is commonly called a “top-down” or “unidirectional” data flow. Any state is always owned by some specific component, and any data or UI derived from that state can only affect components “below” them in the tree.</p>
+    <h1>Handling Events</h1>
+    <p>Handling events with React elements is very similar to handling events on DOM elements. There are some syntactic differences:</p>
+    <ol>
+        <li>React events are named using camelCase, rather than lowercase. <br>
+        </li>
+        <li>With JSX you pass a function as the event handler, rather than a string.
+            <br>
+            <div class="row">
+                <div class="col">
+                    <caption>在HTML中的event control，我们传入一个字符串</caption>
+                    <pre>
+&lt;button onclick="activateLasers()"&gt;
+    Activate Lasers
+    &lt;/button&gt;
+                    </pre>
+                </div>
+                <div class="col">
+                    <caption>在React中的event control，我们传入的是一个函数</caption>
+                    <pre>
+&lt;button onclick={activateLasers}&gt;
+Activate Lasers
+&lt;/button&gt;
+                    </pre>
+                </div>
+            </div>
+            <p>another difference is that we cannot use return false to prevent default behavior in React.</p>
+            <pre>
+function ActionLink() {
+    function handleClick(e) {
+        e.preventDefault();
+        console.log('The link was clicked.');
+    }
+    
+    return (
+        &lt;a href="#" onClick={handleClick}&gt;
+        Click me
+        &lt;/a&gt;
+    );
+    }
+            </pre>
+            <a href="https://www.w3schools.com/jsref/event_onclick.asp">有三种事件控制的方法</a>
+            <ul>
+                <li>HTML</li>
+                <li>JS onclick</li>
+                <li>JS addEventListener</li>
+            </ul>
+            <p>一般来说，在react中不需要使用addEventListener进行event control，
+                因为JSX很像HTML，其实可以直接用类HTML的事件控制方法,这是最方便快捷的，然后将函数写在class内作为class的一个方法</p>
+        </li>
+    </ol>
+    <h2>passing arguments to event handlers</h2>
+    <h1>conditional rendering</h1>
+    <p>In react, you can create distinct components that encapsulate behavior you need. Then you cna render only some of them, dependign on the state of your component</p>
+    <h2>Element variable</h2>
+    <p>we can use variable to store element</p>
+    <p>button = &lt;LogoutButton onClick={this.handleLogoutClick} /&gt;</p>
+    <h2>prevent component from rendering</h2>
+    <p>make sure the component return null, then it will not appear</p>
+    <h1>Lists and Keys</h1>
+    <p>we use map in react to create lists as we do in JavaScript</p>
+    <h2>rendering multiple components</h2>
+    <img src="./images/rendering_list.png" alt="rendering_list">
+    <h2>basic list component</h2>
+    <p>the example above show us how to display a list. It's useful if you can refactor the example into a component that accepts an array and output results as below</p>
+    <img src="./images/rendering_list_component.png" alt="rendering_list_component">
+    <h2>Keys</h2>
+    <p>在React当中，li被要求赋予一个key值用于之后识别该元素是否有修改，添加或者删除</p>
+    <p>default value of key for each li element is the index value of an elemnt in the array</p>
+    <p>默认值时array当中每个元素的index值，但是如果是对象列表的话，也可以创建属于自己的id属性用于遍历显示，和识别目标</p>
+    <h1>Form</h1>
+    
+    
+    
+    
+    
+    
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
