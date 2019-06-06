@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Practice</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+      <ul>
+          需要注意的一些点
+          <li>注意传值的时候，使用的是this.props而不是this.prop</li>
+          <li>注意每个render都有一个return的返回值</li>
+          <li>注意接受props的时候需要在render函数内接受</li>
+      </ul>
+      <div id="container">
+          <!-- This element's contents will be replaced with your component. -->
+      </div>
+<script type="text/babel">
+class ProductCategoryRow extends React.Component{
+  
+  render(){
+    const category = this.props.category;
+    return  (
+      <tr>
+        <th colSpan="2">
+          {category}
+        </th>
+      </tr>)
+  }
+}
+
+class ProductRow extends React.Component{
+
+  render(){
+  const product = this.props.product
+  const name = product.stocked ?
+      product.name :
+      <span style={{color: 'red'}}>
+        {product.name}
+      </span>;
+    return  (<tr>
+      <td>{name}</td>
+      <td>{product.price}</td>
+    </tr>)
+  }
+
+}
+
+class ProductTable extends React.Component{
+
+
+  render(){
+
+    const filterText = this.props.filterText;
+    const inStockOnly = this.props.inStockOnly;
+
+    const rows = []
+    let lastCategory = null
+    // 针对于给出的JSON数据，进行遍历和插入，每遍历依次都要插入一条JSON相对应的数据，只不过不同的情况是，
+    // 当category不同的时候需要插一条categoryRow
+    this.props.products.forEach(product => {
+      if (product.name.indexOf(filterText) === -1) {
+        return;
+      }
+      if (inStockOnly && !product.stocked) {
+        return;
+      }
+      if(product.category!== lastCategory){
+        rows.push(
+          <ProductCategoryRow category={product.category} key={product.category} />
+        )
+      }
+      rows.push(
+        <ProductRow product={product} key={product.name}/>
+      )
+      lastCategory = product.category;
+    });
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>  
+    </table>
+    )
+
+  }
+}
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockChange = this.handleInStockChange.bind(this);
+  }
+  
+  handleFilterTextChange(e) {
+   //searchBar中接受父组件传给他的一个函数，此时调用这个回调函数. this.props是对象字面值，
+  //  由参数FilterableProductTable给SearchBar传递的参数组成，由于父组件中的函数已经绑
+  // 定了this，所以在实际执行中，虽然是this.props调用了这个函数，但是this没有指向这个对象字面值，而是指向了父组件
+    this.props.onFilterTextChange(e.target.value);
+  }
+  
+  handleInStockChange(e) {
+    this.props.onInStockChange(e.target.checked);
+  }
+  render(){
+    return(
+      <form>
+        <input type='text' placeholder="search" onChange={this.handleFilterTextChange}/>
+        <p>
+          <input type="checkbox" onChange={this.handleInStockChange}/>
+          {' '}
+          only show products in stock  
+        </p>
+      </form>
+    )
+  }
+}
+
+class FilterableProductTable extends React.Component{
+
+  constructor(props){
+    super(props)
+    this.state = {filterText:'', inStockOnly: false}
+
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockChange = this.handleInStockChange.bind(this);
+  }
+
+  //可以在这边打印this检测 在constructor中有没有bind这个函数的的区别，bind之后this指向了FilterableProductTable,
+  // 不然的话指向了一个对象字面值，由参数FilterableProductTable给SearchBar传递的参数组成
+  handleFilterTextChange(filterText) {
+    console.log(this)
+    this.setState({
+      filterText: filterText
+    });
+  }
+  
+  handleInStockChange(inStockOnly) {
+    this.setState({
+      inStockOnly: inStockOnly
+    })
+  }
+
+  
+  //给子组件传递函数，由callback函数进行调用，把父亲组件中的state进行修改，父组件提供setstate，子组件提供修改内容
+  render(){
+    return(
+      <div>
+        <SearchBar filterText={this.state.filterText} inStockOnly = {this.state.inStockOnly} onFilterTextChange={this.handleFilterTextChange} onInStockChange={this.handleInStockChange}/>
+        <ProductTable products={this.props.products} filterText={this.state.filterText} inStockOnly = {this.state.inStockOnly} />
+      </div>
+    )
+  }
+}
+const PRODUCTS = [
+  {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
+  {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
+  {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
+  {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
+  {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
+  {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
+];
+
+ReactDOM.render(
+  <FilterableProductTable products={PRODUCTS}/>,
+  document.getElementById('container')
+)
+
+    </script>
+
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+
+       <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -259,13 +259,85 @@ function ActionLink() {
     <p>default value of key for each li element is the index value of an elemnt in the array</p>
     <p>默认值时array当中每个元素的index值，但是如果是对象列表的话，也可以创建属于自己的id属性用于遍历显示，和识别目标</p>
     <h1>Form</h1>
-    
-    
-    
-    
-    
-    
-        <!-- Optional JavaScript -->
+    <p>HTML form elements work a little bit differently from other DOM elements in React, because form elements naturally keep some internal state. For example, this form in plain HTML accepts a single name</p>
+    <h2>controlled elements</h2>
+    <p> An input form element whose value is controlled by React in this way is called a “controlled component”. </p>
+    <p>实现了双向数据绑定，通过设置事件控制，从view控制model，通过给元素设置value，从model控制了view</p>
+    <ul>
+        there are three element for exercise
+        <li>textarea</li>
+        <li>select</li>
+        <li> 
+            <p>input</p> 
+            <h5>Handlign multiple inputs</h5>
+            <p>当有多个input的时候，一般做法是对每个input写一个value change的方法，但是这样会造成冗余，常见的解决方法是给每个input设置一个name，
+                在input事件处理的，通过name判断是哪个element并进行不同操作
+        </li>
+    </ul>
+
+    </p>    
+    <h2>uncontrolled elements</h2>
+    <p>we recommend using controlled components to implement forms.</p>
+    <p>In a controlled component, form data is handled by a React component. In a uncontrolled elements, form data is handled by the DOM itself.</p>
+    <h3>defaultValue</h3>
+    <p>With an uncontrolled component, you often want React to specify the initial value, but leave subsequent updates uncontrolled</p>
+    <a href="https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/">check this link for difference between controlled and uncontrolled components</a>
+    <p>Controlled form always has the current value of the input, without needing to ask for it explicitly.</p>
+    <p>This means your data (state) and UI (inputs) are always in sync. The state gives the value to the input, and the input asks the Form to change the current value.</p>
+    <p>This also means that the form component can respond to input changes immediately; for example, by:</p>
+    <ul>
+        <li>in-place feedback, like validations</li>
+        <li>disabling the button unless all fields have valid data</li>
+        <li>enforcing a specific input format, like credit card numbers</li>
+    </ul>
+    <h1>lifting state up</h1>
+    <h1>compositon and inheritance</h1>
+    <p>代码复用重做，当然这些通过一个class也是完全可以实现的</p>
+    <h2>containment</h2>
+    <p>本质上就是通过return 返回一个父组件标签在外，自定义信息作为参数，自身内容作为父标签所包含内容的写法</p>
+    <p>For some components, they don't know their children ahead of time, We recommend that such components use the special children prop to pass children elements directly into their output:</p>
+    <p>有一些组件，不知道自己的子组件是什么，可以直接使用{props.children}，所以在子组件中使用父组件的时候，会自动把父组件标签内的参数进行传递</p>
+    <p>当然如果知道有哪些子组件的话，最方便的方法还是直接在父组件中引入子组件</p>
+    <h2>specialization</h2>
+    <p>有些时候component是已有components的一个特例，这个时候也是直接在子组件中返回父组件，并填入自定义信息</p>
+    <h2>what about inheritance</h2>
+    <p>在react当中，继承的例子都是可以通过component composition来实现的. 组件可以接受的参数是任意的，基础类型，React元素 或者是函数</p>
+    <p>当需要一个非UI的functionality的时候，可以将其提出独自创建作为一个module，当别的组件需要使用的时候可以引入</p>
+    <h1>Thinking in React</h1>
+    <ol>
+        <li>Break the UI into a composition hierarchy <br>
+            第一件事，我们需要做的就是在mock上面画框框来确定每一个组件以及他们的子组件.可以和designer交流，有可能他们已经设计好了<br>
+            如何来判断是否创建一个组件? 我们一般使用的就是单一职责原则,即一个组件只需要做一件事，如果之后会增大，只需要再将其细分成子组件
+        </li>
+        <li>Build a static version in React <br>
+            搭建一个静态应用需要搭建一个可以复用其他组件的父组件，并通过props对子组件进行数据传递 <br>
+            对于简单应用，可以从上到下进行搭建，对于大型项目，比较容易从下向上搭建，并进行测试 <br>
+            在搭建静态应用的时候是非常简单的，对于每个component都只需要render方法即可,在最上层的父组件会获取你的数据模型作为参数
+        </li>
+        <li>identify the minimal(but complete) representation of UI state <br>
+            为了使UI有交互性，我们需要做的就是对数据模型进行修改. React通过state使得变化变得很容易 <br>
+            先确定我们有的所有数据，然后确定是不是state数据. <br>
+            如何确认是不是state数据?问三个问题 <br>
+            <ul>
+                <li>is it passed in from a parent via props? if so, it probably isn't state</li>
+                <li>Does it remained unchanged over time? if so, it probably isn't state</li>
+                <li>can you compute it based on any other state or props in your component? if so, it probaly isn't state</li>
+            </ul>
+        </li>
+        <li>identify where your state should live
+        <p>In react, it's challenge to figure out which component own these states</p>
+        <ol>
+            there are 4 steps to help to though it:
+            <li>identify every component that renders somthing based on that state</li>
+            <li>find a common owner component(a single component above all the components that need the state in the hierarchy)</li>
+            <li>Either the common owner or another component higher up in the hierarchy should own the state</li>
+            <li>If you can’t find a component where it makes sense to own the state, create a new component simply for holding the state and add it somewhere in the hierarchy above the common owner component.</li>
+        </ol>
+        </li>
+        <li>add inverse data flow</li>
+
+    </ol>
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
