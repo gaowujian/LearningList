@@ -221,8 +221,159 @@ console.log(add.call(obj))
     <h1>Inheritance</h1>
     <p>注意只有函数才有prototype属性，对于实例化的对象来说他们没有prototype属性，每个实例中存在一个[[prototype]]指针指向原型对象，
         在chrome等浏览器中，我们可以通过一个隐藏的__proto__指针查看原型对象</p>
-  
+    <h1>this指针</h1>
+    <ol>
+        了解4项原则
+        <li>default binding 默认绑定 <br>
+            想象成一个孤立全局函数的调用，当其他三个原则都不满足时，这个原则可以使用;在chorme中创建一个函数，并设置断点观察，查看call-stack，我们
+            会发现这个函数是被一个简单无修饰的方法引用，其他三个原则不使用。在strict mode下，this 指向的是undefined而不是window
+        </li>
+        <li>implicit binding <br>
+            给一个函数内的第一句话加断点，查看这个函数有没有一个context object，也没看做是一个owning object或者containing object <br>
+            Only the top/last level of an object property reference chain matters to the call-site. For instance: <br>
+            只有引用链上的最高级或者最后一级才对call-site有影响 <br>
+            <pre>
+function foo() {
+    console.log( this.a );
+}
 
+var obj2 = {
+    a: 42,
+    foo: foo
+};
+
+var obj1 = {
+    a: 2,
+    obj2: obj2
+};
+
+obj1.obj2.foo(); // 42
+在这边最后一级是obj2而不是obj1，所以打印出来的数字是obj2
+            </pre>
+            <b>implicit miss</b>
+            <p>容易出现的一个问题是，implicit binding会丢失自己的this指针</p>
+            <pre>
+function foo() {
+    console.log( this.a );
+}
+
+var obj = {
+    a: 2,
+    foo: foo
+};
+
+var bar = obj.foo; // function reference/alias!
+
+var a = "oops, global"; // `a` also property on global object
+
+bar(); // "oops, global"
+obj.foo() // 2
+使用chrome查看call back， 第一个调用foo只有global scope，第二次调用会有local scope
+这里实际上bar()和obj.foo()是不一样的，赋值的时候，可以理解为只是将右边值得引用赋值给了左边, 所以相当于 var bar = function foo(){},只是foo起了一个别名
+            </pre>
+            <p>另一种情况是传递一个回调函数，容易发生this指针丢失</p>
+            <pre>
+function foo() {
+    console.log( this.a );
+}
+
+function doFoo(fn) {
+    // `fn` is just another reference to `foo`
+
+    fn(); // <-- call-site!
+}
+
+var obj = {
+    a: 2,
+    foo: foo
+};
+
+var a = "oops, global"; // `a` also property on global object
+
+doFoo( obj.foo ); // "oops, global"
+这里打印出来的不是obj的a 而是global的a， 本质上其实和上边的例子一样，都是用了implicit assignment以为有了context，但是本质上是起了一个别名
+对于语言自带的方法也是一样的，回调在本质上就是把函数隐式赋值给了一个变量，之后再函数体最后调用，同样会造成丢失
+function foo() {
+	console.log( this.a );
+}
+
+var obj = {
+	a: 2,
+	foo: foo
+};
+
+var a = "oops, global"; // `a` also property on global object
+
+setTimeout( obj.foo, 100 ); // "oops, global"
+
+function setTimeout(fn,delay) {
+	// wait (somehow) for `delay` milliseconds
+	fn(); // <-- call-site!
+}            
+</pre>
+        </li>
+        <li>explicit binding会丢失自己的this指针
+            <p>在js中，所有的函数都可以通过call和apply进行this指针的强行绑定,同时有一种explicit binding使用的模式叫做hard binding可以用来解决this指针混乱的问题</p>
+            <div class="row">
+                <div class="col">
+                    <p>The most typical way to wrap a function with a hard binding creates a pass-thru of any arguments passed and any return value received:</p>
+                    <pre>
+function foo(something) {
+    console.log( this.a, something );
+    return this.a + something;
+}
+
+var obj = {
+    a: 2
+};
+
+var bar = function() {
+    return foo.apply( obj, arguments );
+};
+
+var b = bar( 3 ); // 2 3    
+console.log( b ); // 5
+                    </pre>
+                </div>
+                <div class="col">
+                    <p>Another way to express this pattern is to create a re-usable helper, 实际上是一种过去方式的进化:</p>
+                    <pre>
+function foo(something) {
+    console.log( this.a, something );
+    return this.a + something;
+}
+
+// simple `bind` helper, 因为hard binding应用广泛，
+//在ES5中引入了bind就是基于此,本质上还是对于apply函数的应用
+function bind(fn, obj) {
+    return function() {
+        return fn.apply( obj, arguments );
+    };
+}
+
+var obj = {
+    a: 2
+};
+
+var bar = bind( foo, obj );
+
+var b = bar( 3 ); // 2 3
+console.log( b ); // 5
+                    </pre>
+                </div>
+            </div>
+
+        </li>   
+        <li>new binding
+            <p>在使用new操作符的时候会有四个基本操作</p>
+            <ol>
+                <li>创建空对象</li>
+                <li>设置空对象的原型对象</li>
+                <li>把这个空对象设置成构造函数的this binding</li>
+                <li>如果构造函数没有显示返回其他对象，那么new操作符会自动返回新创建的对象</li>
+            </ol>
+        </li>
+    </ol>
 
 
 

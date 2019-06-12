@@ -335,8 +335,71 @@ function ActionLink() {
         </ol>
         </li>
         <li>add inverse data flow</li>
-
     </ol>
+    <h1>binding event handlers</h1>
+    <ol>
+        there are 4 ways of binding events
+        <li>构造函数内使用bind方法绑定</li>
+        <li>调用的时候使用bind方法绑定
+            <pre>
+                    valueChange (t, event) {
+                        console.log('bind2', this, t, event)
+                      }
+                    
+                      render () {
+                        return (
+                          <div>
+                                &lt;button onClick={this.valueChange.bind(this,this.state.t)}&gt;打印2&lt;/button&gt;
+                          </div>
+                        )
+                      }
+            </pre>
+        </li>
+        <li>public class fields syntax(experimental)
+                <p> in the case of arrow functions, this is bound lexically. This means that it uses the context of the enclosing function — or global — scope as its this value.
+
+                        In the case of the public class fields syntax example, the arrow function is enclosed inside the Foo class — or constructor function — so the context is the component instance, which is what we want.</p>
+            <pre>
+class Foo extends React.Component{
+    handleClick = () => {
+        console.log(this); 
+    }
+    
+    render(){
+        return (
+            &lt;button type="button" onClick={this.handleClick}&gt;
+            Click Me
+            &lt;/button&gt;
+        );
+    }
+    } 
+
+            </pre>
+        </li>
+        <li>
+            arr function in the callback
+           
+            <pre>
+class Foo extends React.Component{
+    handleClick(event){
+        console.log(this);
+        }
+    
+        render(){
+        return (
+            &lt;button type="button" onClick={(e) => this.handleClick(e)}&gt;
+            Click Me
+            &lt;/button&gt;
+        );
+        }
+    }
+            </pre>
+        </li>
+    </ol>
+    <h1>Refs and DOM</h1>
+    <p>Refs provide a way to access DOM nodes or React elements created in the render method.</p>
+    <p>常用的数据传递是使用props从父组件向子组件传递，但是有的情况下，如果一个子组件没有在数据传递流当中，我们就可以使用refs</p>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
