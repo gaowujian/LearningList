@@ -370,13 +370,51 @@ console.log( b ); // 5
                 <li>创建空对象</li>
                 <li>设置空对象的原型对象</li>
                 <li>把这个空对象设置成构造函数的this binding</li>
-                <li>如果构造函数没有显示返回其他对象，那么new操作符会自动返回新创建的对象</li>
+                <li>如果构造函数没有显示返回其他对象，那么snew操作符会自动返回新创建的对象</li>
             </ol>
         </li>
     </ol>
-
-
-
+    <h1>npm相关的问题</h1>
+    <h2>npm scripts</h2>
+    <a href="https://www.baidu.com/link?url=UU3o808LA-bPrgthi6DMqJMIYW4JgogMvKNBULSiLojNNecKau6PpyvvlT28rHhQ&wd=&eqid=b6413e2e00075f1c000000065d01bbf3">for more details</a>
+    <p>npm 允许在package.json文件里面，使用scripts字段定义脚本命令。npm脚本就是shell脚本</p>
+    <pre>
+{
+    // ...
+    "scripts": {
+        "build": "react-scripts start"
+    }
+    }
+    </pre>
+    <p>npm run提供了一种脚本的调用方式, npm run build等同于去调用node_module/.bin下的名为react-scripts的脚本，有一个参数是start
+        一般一个名为XX脚本的内部 执行命令就是 node XX， 调用脚本时候的传参会在执行node的时候再次传入， 所以在XX.js中可以对这个参数进行判断和其他处理
+    </p>
+    <p>another example另外一个例子</p>
+    <pre>
+{
+    // ...
+    "scripts": {
+        "webpack": "webpack"
+    }
+    }
+    </pre>
+    <p>npm run webpack 等同于 node ./node_modules/webpack/bin/webpack.js  (其实就是node_modules/.bin下的名为webpack的脚本文件的内容)</p>
+    <p>查看当前项目的所有 npm 脚本命令，可以使用不带任何参数的npm run命令。</p>
+    <h2>webpack和webpack-dev-server</h2>
+    <a href="https://www.cnblogs.com/furoro/p/5780558.html">for details</a>
+    <p>webpack只是构建，并不能自动更新，webpack-dev-server相当于是webpack+服务器，提供了http服务，能够监督原始文件的修改，实现内容的自动更新</p>
+    <p>并且这个web服务和live server，apache或者是python创建的server都不一样，只有webpackserver创建的web服务能够实时监测内容更新</p>
+    <h2>npm install save</h2>
+    <a href="https://www.jianshu.com/p/560265997f1b">for more details</a>
+    <p>需要注意的是，现在加不加--save都会修改packag.json</p>
+    <h2>npm install globally or locally</h2>
+    <p>全局安装的好处是已经在环境变量中添加了路径可以直接使用</p>
+    <p>但是为了全局不被污染，我尽量选择本地安装，调用的话可以使用 npm run XX, 可以查看之前的npm脚本，举例如果是express，那我就在package.json中
+        添加 scripts{"express":"express"}，所以npm run express的效果就和全局安装之后再使用 express的效果是一样的了，npm run express调用的是
+    你本地安装的express包，而全局安装的express是调用的C盘的默认路径的安装包</p>
+    <h1>import 和 require</h1>
+    <p>import 是es6的语法，而require是 commonJs的语法，本质上来说import/export是基于require/module export实现的</p>
+    <a href="https://timonweb.com/posts/how-to-enable-es6-imports-in-nodejs/">a great example for explanation</a>
         <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
