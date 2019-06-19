@@ -835,6 +835,9 @@ createAudioFileAsync(audioSettings).then(successCallback, failureCallback);
     <p>闭包的外部函数就好像是实例化了一个对象，创建了一个操作空间，提供了一个基本环境，即定义了对象的属性</p>
     <p>闭包的内部函数就和对象的方法相近，都是在对基本环境的数据进行操作，也能接受来自外部的参数</p>
     <h2>several keywords learning</h2>
+    <h2>brower和node虽然都使用的是js，但是标准不同，在node中使用的是commonJS，在brower中使用的是ES(即ECMAscript)</h2>
+    <h2>值得一提的是现在node中也可以使用ES标准</h2>
+    <a href="https://www.jianshu.com/p/ce92a09ad6eb" target="_blank">如何在node中使用ES中的import和export</a>
     <table class="table" >
         <thead>
           <tr>
@@ -952,8 +955,67 @@ console.log(test1)
           </tr>
         </tbody>
       </table>
-
-    
+    <table class="table" >
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col" >module exports/ exports</th>
+            <th scope="col" >require</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">export literals</th>
+                <td>
+                    <pre>
+//exports is an object, 给exports赋值，所以require可以直接获取值，可以是基本类型也可以是object
+module.exports = 'Hello world';
+//or
+exports = 'Hello world';
+                    </pre>
+                </td>
+                <td>
+                    <pre>
+var msg = require('./Messages.js');
+console.log(msg);
+                    </pre>
+                </td>  
+            </tr>
+            <tr>
+                <th scope="row">export object</th>
+                <td>
+                    <pre>
+//exports是一个对象，所以也可以给他添加属性和方法，而不是直接赋予一个字面值
+exports.SimpleMessage = 'Hello world';
+//or
+module.exports.SimpleMessage = 'Hello world';
+                    </pre>
+                </td>
+                <td>
+                    <pre>
+var msg = require('./Messages.js');
+console.log(msg.SimpleMessage);
+                    </pre>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">export function(和export literal很相似，不过是作为一个方法使用)</th>
+                <td>
+                    <pre>
+module.exports = function (msg) { 
+    console.log(msg);
+};
+                    </pre>
+                </td>
+                <td>
+                    <pre>
+var msg = require('./Log.js');
+msg('Hello World');
+                    </pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
