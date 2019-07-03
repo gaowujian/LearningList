@@ -415,9 +415,49 @@ console.log( b ); // 5
     <p>注意npx语法，使用npx webpack = npm run webpack 前提是已经在package.json文件中定义好了scripts</p>
     <h1>import 和 require</h1>
     <p>import 是es6的语法，而require是 commonJs的语法，本质上来说import/export是基于require/module export实现的</p>
+    <h1>webpack</h1>
+    <p>webpack 视所有文件都为模块, css , 图片, 字体, 数据等静态资源都会打包进 js 文件, 所以会需要用到 loader 文件</p>
+    <p>npx webpack命令默认会去src目录下找index.js文件作为起始点，输出位置是dist中的main.js</p>
+    <p>可以通过npx webpack --config webpack.config.js 来改变配置文件的路径和名字</p>
+    <h2>Asset management</h2>
+    <ol>
+        <li>
+            <caption>loading CSS</caption>
+            <p>语法: 在起始的index.js中添加    import './style.css' </p>
+            <p> In order to import a CSS file from within a JavaScript module, you need to install and add the style-loader and css-loader to your module configuration:</p>
+            <p>为了在一个js模块中可以引用css文件，我们需要添加css-loader和style-loader</p>
+            <p>他们做两件不同的事情，css-loader 会遍历 CSS 文件，然后找到 url() 表达式然后处理他们，style-loader 会把原来的 CSS 代码插入页面中的一个 style 标签中</p>
+        </li>
+        <li>
+            <caption>loading images</caption>
+            <p>语法: import Icon from './icon.png';</p>
+        </li>
+    </ol>
+    <h2>output management</h2>
+    <p>add bundle into your html</p>
+    <p>可以设置不同的entry point，每个entry point有一个name 即key值，可以在output的时候使用[name]进行bundle文件的命名, filename: "[name].bundle.js"</p>
+    <p>bundle的名字可能会随着我们entry point里输入的变化而改变，但是index.html引用的时候，依然是原名字，如何让index能够正确的找到原文件？可以使用HtmlWebpackPlugin</p>
+    <h2>development</h2>
+    <p>介绍一些在development可能用到的点，首先在config的mode中填写development</p>
+    <p>在开发中会出现一些错误，但是会统统指向了bundle.js，没有指向原文件，我们将使用inline-source-map去搭建source map. 在config文件中添加devtool: 'inline-source-map'，在inspect的时候就会显示错误的原文件</p>
+    <p>我们需要一些development tool用于监听原文件，原文件如果有修改会将修改同步到bundle文件中</p>
+    <ol>
+        有三种方法
+        <li>webpack's Watch Mode (npm run watch可以自动同步修改，但是需要刷新浏览器才能查看修改)</li>
+        <li>webpack-dev-server(nom run start可以满足基本需求,创建一个server默认监听8080端口,http://localhost:8080/webpack-dev-server可以查看监听的文件夹，默认加载文件夹中的index.html)</li>
+        <li>webpack-dev-middleware(npm run server会将处理过的文件发送给server，已经被内置于webpack-dev-server中使用，而且被看做一个单独的包允许更多的自定义,可以和express搭配使用)</li>
+    </ol>
+    <a href="https://www.baidu.com/link?url=Mq6r2IKHoTncteHoY9O5VFqJxFJSdmNokNO--Fgwaw_vUYQ4ce1HEYD0Fv0ztvjhfUQEoIgLdybSMNJi90B4jZHMIl8XSAdvLf4lCevhbIK&wd=&eqid=a119d32a000101cf000000065d08d456">关于publicPath和contentBase的区分</a>
+    <h2>HOT module replacement</h2>
+    <p>简称HMR，主要用于开发过程，允许所有模块的自动更新，而不需要整体更新</p>
+    <p>如果不使用HMR只是启动了webpack-dev-server，每次有改变都会重新全部刷新，但是有了HMR只需要刷新所所需内容，类似于Ajax</p>
+    
+
+    
     <a href="https://timonweb.com/posts/how-to-enable-es6-imports-in-nodejs/">a great example for explanation</a>
     <a href="https://www.tutorialsteacher.com/nodejs/nodejs-module-exports">module.exports的用法</a>
     <a href="https://www.baidu.com/link?url=t-0eA8AGGRWQ_MQpHfqZxBb5459EheTESNPU_rRKy2bMc9aRStHyS9V2Lw_fgy7J&wd=&eqid=8e4c9ac70000303c000000065d06ff47">require语句到底发生了什么</a>
+<<<<<<< HEAD
     <h1>webpack</h1>
     <p>webpack 视所有文件都为模块, css , 图片, 字体, 数据等静态资源都会打包进 js 文件, 所以会需要用到 loader 文件</p>
     <p>npx webpack命令默认会去src目录下找index.js文件作为起始点，输出位置是dist中的main.js</p>
@@ -517,6 +557,8 @@ console.log( b ); // 5
     </pre>
     
 
+=======
+>>>>>>> 9f06248ab2b2dfdaaeb34689a97274f94803356b
         <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

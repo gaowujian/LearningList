@@ -9,5 +9,9 @@ react.js
 /.vscode
 /express-app
 /webpack-demo
+<<<<<<< HEAD
 es_ and_commonJS
 /redux_tutorial
+=======
+es_ and_commonJS
+>>>>>>> 9f06248ab2b2dfdaaeb34689a97274f94803356b
