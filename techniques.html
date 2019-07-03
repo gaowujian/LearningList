@@ -415,6 +415,9 @@ console.log( b ); // 5
     <p>注意npx语法，使用npx webpack = npm run webpack 前提是已经在package.json文件中定义好了scripts</p>
     <h1>import 和 require</h1>
     <p>import 是es6的语法，而require是 commonJs的语法，本质上来说import/export是基于require/module export实现的</p>
+    <a href="https://timonweb.com/posts/how-to-enable-es6-imports-in-nodejs/">a great example for explanation</a>
+    <a href="https://www.tutorialsteacher.com/nodejs/nodejs-module-exports">module.exports的用法</a>
+    <a href="https://www.baidu.com/link?url=t-0eA8AGGRWQ_MQpHfqZxBb5459EheTESNPU_rRKy2bMc9aRStHyS9V2Lw_fgy7J&wd=&eqid=8e4c9ac70000303c000000065d06ff47">require语句到底发生了什么</a>
     <h1>webpack</h1>
     <p>webpack 视所有文件都为模块, css , 图片, 字体, 数据等静态资源都会打包进 js 文件, 所以会需要用到 loader 文件</p>
     <p>npx webpack命令默认会去src目录下找index.js文件作为起始点，输出位置是dist中的main.js</p>
@@ -451,12 +454,69 @@ console.log( b ); // 5
     <h2>HOT module replacement</h2>
     <p>简称HMR，主要用于开发过程，允许所有模块的自动更新，而不需要整体更新</p>
     <p>如果不使用HMR只是启动了webpack-dev-server，每次有改变都会重新全部刷新，但是有了HMR只需要刷新所所需内容，类似于Ajax</p>
+    <h1>float的使用</h1>
+    <p>float启用的时候，元素的display属性被默认设置为block，如果元素的position是绝对定位，或者display:none，float将会失效</p>
+    <p>使用float之后元素被设置成了inline-block, </p>
+    
+    <h1>Z-index的使用</h1>
+    <a href="https://www.cnblogs.com/dolphinX/p/3262469.html">有用的链接</a>
+    <p>Z-index的作用主要是元素直接有重合时，可以通过设置z-index值决定显示顺序，值越大，越靠上</p>
+    <ol>
+        使用要求
+        <li>父元素节点必须有position属性(除static之外)</li>
+        <li>添加z-index的元素必须有position属性</li>
+    </ol>
+    <ol>
+        Z-index不起作用的常见情况
+        <li>父标签 position属性为relative；需要改为absolute</li>
+        <li>当前标签没有position属性</li>
+        <li>当前标签有float属性，需要去除</li>
+    </ol>
+    <h1>文档流和文本流</h1>
+    <a href="https://www.baidu.com/link?url=GMSE0PYWmWm_DqKhhOH1oHYdegCg0b3KfC32YPDYSCOT6hyeR7DpZnbZfYsEr37DELLfJW8DH04vE7cWZ37cwq&wd=&eqid=ca3ae82400094b75000000065d12f7d4">有用的链接</a>
+    <ol>
+        简单来说：只有两种需要讨论的方式:float和绝对定位
+        <li>float脱离文档流，但是没有脱离文本流</li>
+        <li>绝对定位既脱离了文档流也脱离了文本流</li>
+    </ol>
+    <h1>HTML5中自定义data*的问题</h1>
+    <a href="https://www.sitepoint.com/how-why-use-html5-custom-data-attributes/">查看更详细的信息</a>
+    <p>举例来说，一个网页上有一组饭店信息，在html5之前，如果我们想要存储菜品信息以及饭店到客户的距离，我们会使用class属性，但是使用class会有一些问题</p>
+    <ul>
+        <li>class的主要问题不是为了存储信息，主要目的是帮助developer给不同的element添加style</li>
+        <li>每一条多余的信息如果都要添加一个class的话，这样的话会导致解析js的数据的过程变得更加困难</li>
+    </ul>
+    <p>正确的HTML语法 </p>
+    <p>除了data-的前缀，还必须包括 letters, numbers, hyphen (-), dot (.), colon (:) or underscore (_), 不能包括大写字母</p>
+    <pre>
+&lt;li data-type="veg" data-distance="2miles" data-identifier="10318"&gt;
+    Salad King
+    &lt;/li&gt;
+    </pre>
+    <p>在使用data自定义标签的时候，需要注意两件事</p>
+    <ol>
+        <li>存储的数据必须是string类型</li>
+        <li>data attribute只能在没有合适的标签和属性的时候使用，例如不要存储class属性到data-class</li>
+    </ol>
+    <p>在js中获取data attribute</p>
+    <span data-title="P段落">这是一个P</span>
+    <script>
+            const pEle = document.querySelector('span');
+            //两种方式均可以，一个是传统的getAttribute，另一种是从元素绑定data对象中提取
+            console.log(pEle.getAttribute('data-title'));
+            console.log(pEle.dataset.title);
+    </script>
+    <p>在css中获取data attribute,使用attr函数 或者属性选择器</p>
+    <pre>
+    article::before {
+        content: attr(data-parent);
+        }
+    article[data-columns='3'] {
+        width: 400px;
+        }
+    </pre>
     
 
-    
-    <a href="https://timonweb.com/posts/how-to-enable-es6-imports-in-nodejs/">a great example for explanation</a>
-    <a href="https://www.tutorialsteacher.com/nodejs/nodejs-module-exports">module.exports的用法</a>
-    <a href="https://www.baidu.com/link?url=t-0eA8AGGRWQ_MQpHfqZxBb5459EheTESNPU_rRKy2bMc9aRStHyS9V2Lw_fgy7J&wd=&eqid=8e4c9ac70000303c000000065d06ff47">require语句到底发生了什么</a>
         <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
