@@ -145,5 +145,203 @@
         hover的状态永远不会出线，所以link和visited都放在hover之前，所以最常用的定义顺序就是，link, visited, hover, active (即LVHA)
     </p>
     <h1>值和单位</h1>
+    <h2>Keywords, string and other text values</h2>
+    <h3>global keywords</h3>
+    <ul>
+        <li>inherit: (值和父元素的值相同)The keyword inherit makes the value of a property on an element the same
+                as the value of that property on its parent element</li>
+        <li>initial: (设置为初始值，每一个属性其实都有自己的初始值)The keyword initial sets the value of a property to the defined initial value,
+                which in a way means it “resets” the value. </li>
+        <li>unset:(如果属性可继承，那么就等同于inherit，否则等同于initial)The keyword unset acts as a universal stand-in for both inherit and ini
+                tial</li>
+    </ul>
+    <h3>url</h3>
+    <p>css中引入url的正确语法:  url(protocol://server/pathname)</p>
+    <h2>distance</h2>
+    <h3>Absolute length units绝对长度单位</h3>
+    <ol>
+        <li>inches(in)</li>
+        <li>centimeters(cm)</li>
+        <li>millimeters(mm)</li>
+        <li>quarter-millimeters(p)</li>
+        <li>points(pt):打印机常用</li>
+        <li>picas(pc)</li>
+        <li>pixel(px)</li>
+    </ol>
+    <p>网页的展示取决于屏幕大小和分辨率大小，所以以上的单位不建议使用，除非你知道会在何种环境下使用</p>
+    <h3>relative length units 相对长度单位</h3>
+    <ol>
+        <li>em:  “em” is defined to be the value of font-size for a given font. In theory, one em is equal to the width of a lowercase m in the font used</li>
+        <li>ex: In theory, one ex is equal to the height of a lowercase x in the font used</li>
+        <li>rem:  the rem unit is based on declared font size, using the root element(html)</li>
+        <li>ch: </li>
+        <li>vw: (Viewport width unit)divided by 100. Therefore, if the viewport is 937 pixels wide, 1vw is equal to 9.37px</li>
+        <li>vh:(Viewport width unit)</li>
+        <li>vmin:(Viewport minimum unit) 1000px宽 500px高 那么1vmin是5px</li>
+        <li>vmax:(Viewport maximum unit) 1000px宽 500px高 那么1vmin是10px</li>
+    </ol>
+    <h2>calculation values</h2>
+    <p>我们可以使用calc()函数进行长度的计算，可以计算长度，时间，频率，角度，时间，百分比，数字和整数</p>
+    <h2>attribute values</h2>
+    <p>针对一些css的属性，有时候需要用html的属性值，例如 p::before {content: "[" attr(id) "]";} 会在所有p段落前加上p标签的id值    &lt; p id="leadoff" &gt; This is the first paragraph. &lt;/p &gt; 会变成  [leadoff]This is the first paragraph. </p>
+    <h2>color</h2>
+    <p>我们有148种已定义的颜色，还有RGB,RGBA,HSL和HSLA 等不同方式定义颜色</p>
+    <p>我们还有两个color的关键字，可以用在填写颜色的地方，他们是transparent和currentColor(copy color属性的值)</p>
+    <h2>angles</h2>
+    <p>我们有四种方式定义角度</p>
+    <ul>
+        <li>deg, 360组成一圈,eg 270 deg</li>
+        <li>grad, 400组成一圈, eg 300 grad</li>
+        <li>rad, 2π组成一圈, eg0.785 rad</li>
+        <li>turn, 1表示一圈，在制作动画旋转的时候尤其有用,10turn表示旋转10圈</li>
+    </ul>
+    <h2>time and frequency</h2>
+    <p>a[href] {transition-duration: 2.4s;} 主要有两个单位s和ms</p>
+    <p>h1 {pitch: 128hz;} 频率主要有hz</p>
+    <h2>position</h2>
+    <h2>custom values</h2>
+    <pre>
+html {
+    --alison: #639;
+    --david: #AEA;
+    }
+    h1 {color: var(--alison);}
+    </pre>
+    <p>在html内中声明了一个变量，自定义变量需要--开头，在调用的时候通过var关键字，区分大小写</p>
+    <h1>字体</h1>
+    <h2>字体系列 font-family</h2>
+    <p>有五种通用字体</p>
+    <ol style="font-size:18px">
+        <li style="font-family: serif">serif：成比例有上下短线,短线指的是字符比划末端的装饰，例如f和l的小尾巴</li>
+        <li style="font-family: sans-serif">sans-serif：成比例没有上下短线</li>
+        <li style="font-family: monospace">monospace：不成比例，每个字符的长度基本相同</li>
+        <li style="font-family: cursive">cursive:模仿人的手写体</li>
+        <li style="font-family: fantasy;">fantasy:无任何特征定义</li>
+    </ol>
+    <p>注意font-family字体属性，如果字体名有空格，需要使用引号将字体名括起来，例如 'Times New Roman'</p>
+    <h2>字体加粗 font-weight</h2>
+    <p>通过设置font-family也可以实现加粗的效果例如TimesBold</p>
+    <p>关键字:100-900,  100-400反映了较细变细， 500，600对应较粗， 700，800，900对应了很粗的字体</p>
+    <p>400对应了normal，700对应了bold</p>
+    <h2>字体大小 font-size</h2>
+    <h2>字体风格 font-style</h2>
+    <ul>
+        <li style="font-style: normal">使用normal的文本</li>
+        <li style="font-style: italic">使用italic的文本，斜体</li>
+        <li style="font-style: oblique">使用oblique的文本，倾斜文本</li>
+    </ul>
+    <p>italic和oblique的区别:他们都是让字体具有倾斜的效果，italic是字体自带的斜体属性，oblique是使字体向右倾斜。但是，并不是所有字体都具有斜体的样式，对于那些没有斜体样式的字体来说，使用italic是没有效果的，此时就可以利用oblique代替italic来实现字体倾斜的效果啦。</p>
+    <h2>字体变形 font-variant</h2>
+    <ul style="font-size:18px">
+        <li style="font-variant: normal">使用normal的文本</li>
+        <li style="font-variant: small-caps">使用Small-caps的文本，使用小型大写字母文本</li>
+    </ul>
+    <p>font主要有5个属性:font-family, font-weight, font-size, font-style, font-variant， 其实还有另外一个属性line-height，虽然他是一个text属性而不是font属性</p>
+    <p>简写font属性: font-style | font-variant | font-weight | font-size | line-height | font-family</p>
+    <p>可以使用关键字给font属性添加设置:</p>
+    <ul style="font-size:18px">
+        <li style="font:caption">caption:有标题的空间</li>
+        <li style="font:icon">icon：对图标添加标签</li>
+        <li style="font:menu">menu：用于菜单，即下拉菜单列表</li>
+        <li style="font:message-box">message-box:用于对话框</li>
+        <li style="font:small-caption">用于对小控件添加标签</li>
+        <li style="font:status-bar">用于窗口状态条</li>
+    </ul>
+    <h1>文本属性</h1>
+    <p>首先的是区分文本和字体:文本就是内容，而字体用于显示这个内容</p>
+    <h2>文本缩进 text-indent</h2>
+    <p>有很多种实现方式，有的网站在文本前放一个透明图形，有的网站采用完全非标准的spacer标记 例如 &nbsp</p>
+    <p>text-indent只用于块级元素，而不能用于行内元素，行内元素通过设置内边距和外边距实现缩进</p>
+    <h2>水平对齐 text-align</h2>
+    <p>主要有三个值:left,right,center, 新增的justfy可以将内容平均分配在一行之内</p>
+    <h2>inline alignment 行内对齐</h2>
+    <h3>the height of lines</h3>
+    <p>line-height指的是不同文本基线之间的距离，而不是字体的大小</p>
+    <h4>一行的组成部分</h4>
+    <img src="./images/constructureOfAline.png" alt="constructuing a line" >
+    <p>line-height实际上控制的是leading 行间距</p>
+    <h4>assign values to line-height</h4>
+    <p>一般来说user agent设置的是1.2倍的font-size</p>
+    
+
+
+
+
+    <h1>Basic visual formatting</h1>
+    <h2>Basic box 盒子模型</h2>
+    <h3>A quick refresher</h3>
+    <dl>
+        <dt>normal flow</dt>
+        <dd>从左到右，从上到下的西文文本渲染 和相似的html文档的文本布局渲染 联合称为normal flow. 一个元素脱离normal flow的方法有
+                floated，positioned或者是放于一个flexible box或grid 布局元素中</dd>
+        <dt>nonreplaced element</dt>
+        <dd>元素的内容存在于文档流中的的元素，例如p</dd>
+        <dt>replaced element</dt>
+        <dd>元素冲淡了一个占位的作用，例如img</dd>
+        <dt>root element</dt>
+        <dd>根元素，在html文档当中，这个元素就是html标签</dd>
+        <dt>block box</dt>
+        <dd>块盒子在normal flow中垂直叠加，任何元素都可以用来创建一个块盒子，通过设置display:block</dd>
+        <dt>inline box</dt>
+        <dd>行内盒子不会在盒子前后创建换行，通过设置display:inline</dd>
+        <dt>inline-block box</dt>
+        <dd>行内块壳子，对内表现是块盒子，对外表现是行内盒子</dd>
+    </dl>
+    <p>还有一些其他的盒子模型，包括table-cell boxes，因为这些盒子很复杂 本身就需要一本书来解释，尽量不使就好了</p>
+    <h3>Containning block</h3>
+    <p>the containing block forms from the content edge of the nearest ancestor that generated a list item or block box</p>
+    <p>容器块由最近的祖先模块的内容区域生成，且这个祖先有一个list元素或者块元素，html是最初是的容器块</p>
+    <h2>altering element display</h2>
+    <h3>changing roles 改变角色</h3>
+    <p>需要注意的是，改变元素的display属性并不能改变他们内在的本质，换句话说，一个p标签创建了一个inline box并不意味着他就是一个行内元素</p>
+    <p>块元素可以包含行内元素，但是反过来往往不能，display只是改变了他们的展示方式，但是不能改变行内元素不能放块元素的本质</p>
+    <h3>block boxes</h3>
+    <p>box-sizing:适用于一切接受height和width值的元素，主要是块元素，不过也同样适用于行内元素例如img，和inline-block元素</p>
+    <p>this property is how you change what the width and height values actually do</p>
+    <p>content-box  The width and height properties (and min/max properties) includes only the content.</p>
+    <p>border-box	The width and height properties (and min/max properties) includes content, padding and border</p>
+    <h3>horizontal formatting</h3>
+    <p>水平方向格式化通常比我们想想的要复杂，因为box-sizing</p>
+    <p>外部元素的content area的宽度，等于子元素的content area + padding + border + margin</p>
+    <p>上边的原则不会变，永远是以父元素的内容区域为基准，改变display只是改变了当前元素的width组成，是否包含padding和border</p>
+    <h3>horizontal property</h3>
+    <p>7个水平属性包括, margin-left, border-left, padding-left, width, padding-right, border-right, margin-right</p>
+    <p>其中只有3个值可以设置为auto，包括width,margin-left和margin-right，其他的四个属性必须设置值或者默认为0</p>
+    <h3>using auto</h3>
+    <p>有一种情况，当padding,border保持默认为0，width,margin-left和margin-right设为固定值，但是加起来的width不等于父元素的content width，
+        这种情况下属于过度限制，margin-right的值会被强制设成auto。事实上，不仅是这种情况，当出现任何过度限制的情况下,margin-right都会被
+        设置成auto来满足 7个属性的和等于父元素content area宽度的等式
+    </p>
+    <h3>more than one auto</h3>
+    <p>如果两个margin是auto,且父元素子元素的width固定，那么子元素会被居中显示</p>
+    <p>如果是width和一个margin设为auto，设置了一个margin为固定值，那么设为auto的margin值会自动转为0，width长度会填满剩余区域</p>
+    <p>如果三个值都是auto呢，那么margin值会被设置为0，width值会填满containing block</p>
+    <p>水平方向的padding，margin不会合并</p>
+    <h3>negative margin</h3>
+    <p>margin可以设置为负值来实现某些有趣的效果，但是padding，border和width永远不可以设置为负值</p>
+    <h3>percentages</h3>
+    <p>当7属性中，有不同的赋值方式，百分比，长度值等等，会有一些tricky的事情发生，margin-right总会处理到位</p>
+    <p>border不接受百分比</p>
+    <h3>replaced elements</h3>
+    <p>可替换元素比不可替换元素甚至更好管理，只有一点不同，例如对于img来说，如果width设置成auto的话，那么img的width默认就是图片的大小</p>
+    <p>图片的height会根据width的变化同比例变化，如果设置了固定值，那就会按照固定值显示</p>
+    <h3>vertical formatting</h3>
+    <p>默认等于可见元素加起来的高度，可以设置固定值，如果大于子元素，会出现padding的效果，如果小于，会出现overflow的默认滚动效果</p>
+    <h3>vertical property</h3>
+    <p>同样是由7个属性组成, margin-top, border-top, padding-top, height, padding-bottom, border-bottom, margin-bottom</p>
+    <h3>percentage height</h3>
+    <p>当margin-top和margin-bottom设置为auto的时候，他们会自动等于0，所以不能通过设置auto的方式达到垂直居中的效果</p>
+    <p>在这种情况下，一种比较的方式就是，显式设置margin-top和margin-bottom的值，使他们相等，同时给height赋值</p>
+    <p>但是如果父节点的height没有设置的话，percentage设为auto会自动转为0，因为默认来说父元素的height是子元素累加而来，如果不提前设定好，
+        而子元素想用percentage设置高度的话，是找不到依据的
+    </p>
+    <div style="height: 6em;">
+        <p style="height: 50%">Half as tall</p>
+    </div>
+    <h3>collapsing vertical margins</h3>
+    <p>垂直margin会有合并的效果，当negative margin合positive margin相遇时，不会合并，而是进行想加减</p>
+    <h2>inline elements</h2>
+    <h3>line layout</h3>
+    <p></p>
 </body>
 </html>
