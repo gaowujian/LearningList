@@ -654,7 +654,9 @@ transition-duration: 1s, 2s, 3s;
     <p>keyfram_selector可以使用百分比或者from和to关键字来表示动画执行的进程, 任何负值，超过100%的百分比，和非关键字都会忽略</p>
     <p>注意:通过keyframe并不能设置动画执行了多长时间，相反，只会用百分比告诉你进程的大致状态</p>
     <h2>setting up keyframe animations</h2>
-    <p>当没有0%的keyframe selector的时候，浏览器会使用元素的初始状态创建一个0%时候的状态</p>
+    <p>the keyword from is equal to 0%, the keyword to is equal to 100%.</p>
+    <h3>omitting from and to values</h3>
+    <p>当没有0%或者from的keyframe selector的时候，浏览器会使用元素的初始状态创建一个0%时候的状态，对于缺失100%或者to也是一样的，默认值和from一样，都是没有执行动画前的初始值</p>
     <h3>Nonanimatable Properties That Aren’t Ignored</h3>
     <p>没有被忽略的非可动画属性，我们之前提过中间值原则，没有中间值的属性一般不能执行动画效果。有两个特例,visibility和animation-timing-function</p>
     <p>visibility只有hidden和visible，没有中间值但是是一个可执行动画属性</p>
@@ -672,8 +674,55 @@ transition-duration: 1s, 2s, 3s;
     <p>一共有三次动画效果事件会触发，animationstart, animationend, 和 animationiteration. 他们会分别在动画执行前，动画执行后，以及当前动画执行结束到下一轮动画执行前的间隙中执行.
             animationiteration只有在多轮动画的时候才会触发，因为不能同时触发animationend, 和 animationiteration两个事件</p>
     <h2>animating elements</h2>
-    <p></p>
-
+    <p>we’ve included each @keyframe anima‐
+        tion identifier in our list of comma-separated values on the animation-name prop‐
+        erty. If more than one animation is applied to an element and those animations have
+        repeated properties, the later animations override the property values in the earlier
+        animations. </p>
+    <p>使用逗号隔开的一系列值来添加多个动画，多个动画含有相同属性时，后面的会覆盖前面的</p>
+    <h3>naming animations</h3>
+    <p>通过设置animation-name可以给不同元素添加动画效果，此时也可以触发animationstart 和 animationend两次事件,但是单单设置animation-name是看不出效果的，必须要设置animation-time属性</p>
+    <h3>defining animation length</h3>
+    <pre>
+        可以给不同的animation设定不同的动画时间
+div {
+    animation-name: change_bgcolor, round, W;
+    animation-duration: 200ms, 100ms, 0.5s;
+    }
+    </pre>
+    <h3>animation-iteration-count</h3>
+    <p>表示动画的循环次数，可以是数字也可以是关键字infinite</p>
+    <h3>animation-direction</h3>
+    <p>控制动画的执行顺序，有四个不同的关键字:</p>
+    <ul>
+        <li>normal:(default) 默认从0%到100%执行</li>
+        <li>reverse:总是从100%向0%执行</li>
+        <li>alternate: 奇数循环的时候从0%到100%, 偶数循环的时候从100%到0%</li>
+        <li>alternate-reverse: 奇数循环从100%到0%，偶数循环的时候从0%到100%</li>
+    </ul>
+    <h3>animation-delay</h3>
+    <p>控制动画开始之前的延迟时间</p>
+    <h3>animation events</h3>
+    <p>动画事件，可以用js监听元素的动画事件作出相应的操作</p>
+    <pre>
+    document.querySelectorAll('li')[3].addEventListener( 'animationend',
+    function(e) {
+    document.querySelectorAll('li')[4].style.animationName = 'blue';
+    },
+    false );
+    </pre>
+    <h3>animation-timing-function</h3>
+    <p>和transition非常类似，用于控制变化的速率，先快后慢，先慢后快或者是其他</p>
+    <h3>animate-play-state</h3>
+    <p>用于控制动画的执行状态，默认值是running，被赋值paused的时候，动画会暂停，重新设置为running会继续执行</p>
+    <h3>animation-fill-mode</h3>
+    <p>通过该属性可以设置animation是如何在animationstart之前和animated之后影响元素的</p>
+    <p>默认值是none，即不对元素添加任何动画效果.添加backwards之后，不需要等待animation-delay立即执行.添加forwards之后，以为着即使动画结束也会保持最后的动画状态</p>
+    <h3>bring it together</h3>
+    <p>animatition 是多个属性的集合，包含animation-name, animation-duration, animation-timing-function, animation-delay,
+        animation-iteration-count, animation-direction, animation-fill-mode, animation-play-state
+    </p>
+    
 </body>
 
 </html>
